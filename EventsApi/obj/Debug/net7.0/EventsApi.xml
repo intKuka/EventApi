@@ -4,6 +4,32 @@
         <name>EventsApi</name>
     </assembly>
     <members>
+        <member name="M:EventsApi.Features.Events.AdditionalController.GetImages">
+            <summary>
+            get all images
+            </summary>
+            <returns>list of all images</returns>
+        </member>
+        <member name="M:EventsApi.Features.Events.AdditionalController.GetImageById(System.Guid)">
+            <summary>
+            searchs and returns an image by its id
+            </summary>
+            <param name="id">existing image id</param>
+            <returns>existing image</returns>
+        </member>
+        <member name="M:EventsApi.Features.Events.AdditionalController.GetSpaces">
+            <summary>
+            get all spaces
+            </summary>
+            <returns>list of all spaces</returns>
+        </member>
+        <member name="M:EventsApi.Features.Events.AdditionalController.GetSpaceById(System.Guid)">
+            <summary>
+            searchs and returns a space by its id
+            </summary>
+            <param name="id">existing space id</param>
+            <returns>existing space</returns>
+        </member>
         <member name="M:EventsApi.Features.Events.EventsController.GetEvents">
             <summary>
             get all events
