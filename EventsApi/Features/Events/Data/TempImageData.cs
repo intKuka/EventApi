@@ -1,4 +1,6 @@
-﻿namespace EventsApi.Features.Events.Data
+﻿using Microsoft.Extensions.Logging;
+
+namespace EventsApi.Features.Events.Data
 {
     public class TempImageData
     {
@@ -10,6 +12,15 @@
         };
 
 
+        public static List<EventImage> GetAll()
+        {
+            return images;
+        }
+
+        public static EventImage? GetById(Guid id)
+        {
+            return images.FirstOrDefault(e => e.Id == id);
+        }
         public static bool CheckImage(Guid id)
         {
             if (images.FirstOrDefault(i => i.Id == id) == null)

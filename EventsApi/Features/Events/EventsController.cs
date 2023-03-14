@@ -22,7 +22,7 @@ namespace EventsApi.Features.Events
         }
 
 
-        // GET: api/<EventsController>
+        // GET api/events
         /// <summary>
         /// get all events
         /// </summary>
@@ -40,7 +40,7 @@ namespace EventsApi.Features.Events
             return Ok(events);
         }
 
-        // GET api/<EventsController>/5
+        // GET api/events/{id}
         /// <summary>
         /// searchs and returns an event by its id
         /// </summary>
@@ -60,7 +60,7 @@ namespace EventsApi.Features.Events
             return NotFound();
         }
 
-        // POST api/<EventsController>
+        // POST api/events
         /// <summary>
         /// creates new event
         /// </summary>
@@ -104,7 +104,7 @@ namespace EventsApi.Features.Events
             return Ok(await _mediator.Send(new CreateEventCommand(event_)));
         }
 
-        // PUT api/<EventsController>/5
+        // PUT api/events/{id}
         /// <summary>
         /// alters event into a new one
         /// </summary>
@@ -151,7 +151,7 @@ namespace EventsApi.Features.Events
             return NotFound();
         }
 
-        // DELETE api/<EventsController>/5
+        // DELETE api/events/{id}
         /// <summary>
         /// removes event from the list
         /// </summary>
