@@ -1,5 +1,4 @@
 ﻿using EventsApi.Features.Models;
-using Microsoft.Extensions.Logging;
 using SC.Internship.Common.Exceptions;
 
 namespace EventsApi.Features.Images

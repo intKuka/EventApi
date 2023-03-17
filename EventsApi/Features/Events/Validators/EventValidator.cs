@@ -1,5 +1,4 @@
-﻿using EventsApi.Features.Events.Data;
-using EventsApi.Features.Models;
+﻿using EventsApi.Features.Models;
 using FluentValidation;
 
 namespace EventsApi.Features.Events.Validators
@@ -8,7 +7,6 @@ namespace EventsApi.Features.Events.Validators
     {
         public EventValidator()
         {
-            //Cascade(CascadeMode.Stop)
             RuleLevelCascadeMode = CascadeMode.Stop;
 
             RuleFor(e => e.Ends).GreaterThan(e => e.Starts).WithMessage("Дата окончания раньше даты начала");

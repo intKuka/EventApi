@@ -1,12 +1,9 @@
-﻿using System.Text.Json;
-using EventsApi.Features.Events.Commands;
+﻿using EventsApi.Features.Events.Commands;
 using EventsApi.Features.Events.Queries;
 using EventsApi.Features.Models;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using SC.Internship.Common.Exceptions;
 using SC.Internship.Common.ScResult;
 
 
@@ -28,54 +25,61 @@ namespace EventsApi.Features.Controllers
 
         // GET api/events
         /// <summary>
-        /// get all events
+        /// получить все мероприятия
         /// </summary>
-        /// <returns>list of all events</returns>
+        /// <returns>список всех мероприятий</returns>
+        /// <response code="200">Успешное выполнение</response>
         [HttpGet]
         [ProducesResponseType(typeof(ScResult<IEnumerable<Event>>), 200)]
         [ProducesDefaultResponseType]
         public async Task<ScResult<IEnumerable<Event>>> GetEvents()
         {
-            var events = await _mediator.Send(new GetEventsQuery());
-            return events;
+            var result = await _mediator.Send(new GetEventsQuery());
+            return result;
         }
 
         // GET api/events/{id}
         /// <summary>
-        /// search and returns an event by its id
+        /// получить мероприятие по его guid
         /// </summary>
-        /// <param name="id">existing event id</param>
-        /// <returns>existing event</returns>
+        /// <param name="id">guid существующего мероприятия</param>
+        /// <returns>существующее мероприятие</returns>
+        /// <response code="400">Плохие данные клиента</response>
+        /// <response code="200">Успешное выполнение</response>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ScResult<Event>), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<ScResult<Event>> GetEventById(Guid id)
         {
-            var event_ = await _mediator.Send(new GetEventByIdQuery(id));
-            return event_;
+            return await _mediator.Send(new GetEventByIdQuery(id));
         }
 
         // POST api/events
         /// <summary>
-        /// creates new event
+        /// создать новое мероприятие
         /// </summary>
-        /// <param name="starts">date and time when event starts</param>
-        /// <param name="ends">date and time when event ends</param>
-        /// <param name="name">name of event</param>
-        /// <param name="imageId">image id for this event</param>
-        /// <param name="spaceId">space id for this event</param>
-        /// <param name="ticketQuantity">количество билетов для мероприятия</param>
+        /// <param name="starts">дата и время начала</param>
+        /// <param name="ends">дата и время окончания</param>
+        /// <param name="name">название</param>
+        /// <param name="imageId">guid картинки для мероприятия</param>
+        /// <param name="spaceId">guid места проведения</param>
+        /// <param name="ticketQuantity">количество билетов</param>
         /// <param name="description">описание</param>
-        /// <returns>created event</returns>
-        /// <remarks>data installation format: yyyy-mm-ddThh:MM:ss</remarks>
+        /// <returns>изменяет мероприятие</returns>
+        /// <remarks>
+        /// формат установки даты: yyyy-mm-ddThh:MM:ss
+        /// пример: 2023-03-15T16:40:20
+        /// </remarks>
+        /// <response code="400">Плохие данные клиента</response>
+        /// <response code="201">Создано успешно</response>
         [HttpPost]
         [ProducesResponseType(typeof(ScResult<Event>), 201)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<ScResult<Event>> PostEvent(DateTime starts, DateTime ends, string name, Guid imageId, Guid spaceId, int ticketQuantity = 0, string description = "")
         {
-            var event_ = new Event()
+            var result = new Event()
             {
                 Id = Guid.NewGuid(),
                 Starts = starts,
@@ -86,32 +90,37 @@ namespace EventsApi.Features.Controllers
                 SpaceId = spaceId,
                 TicketsQuantity = ticketQuantity
             };
-            await _validator.ValidateAndThrowAsync(event_);
+            await _validator.ValidateAndThrowAsync(result);
 
-            return await _mediator.Send(new CreateEventCommand(event_));
+            return await _mediator.Send(new CreateEventCommand(result));
         }
 
         // PUT api/events/{id}
         /// <summary>
-        /// alters event into a new one
+        /// изменить мероприятие по его guid
         /// </summary>
-        /// <param name="id">id of event to change</param>
-        /// <param name="starts">date and time when event starts</param>
-        /// <param name="ends">date and time when event ends</param>
-        /// <param name="name">name of event</param>
-        /// <param name="imageId">image id for this event</param>
-        /// <param name="spaceId">space id for this event</param>
-        /// <param name="ticketQuantity"></param>
-        /// <param name="description">description</param>
-        /// <returns>altered event</returns>
-        /// <remarks>data installation format: yyyy-mm-ddThh:MM:ss</remarks>
+        /// <param name="id">guid мерориятия, которое нужно изменить</param>
+        /// <param name="starts">дата и время начала</param>
+        /// <param name="ends">дата и время окончания</param>
+        /// <param name="name">название</param>
+        /// <param name="imageId">guid картинки для мероприятия</param>
+        /// <param name="spaceId">guid места проведения</param>
+        /// <param name="ticketQuantity">количество билетов</param>
+        /// <param name="description">описание</param>
+        /// <returns>изменяет мероприятие</returns>
+        /// <remarks>
+        /// формат установки даты: yyyy-mm-ddThh:MM:ss
+        /// пример: 2023-03-15T16:40:20
+        /// </remarks>
+        /// <response code="400">Плохие данные клиента</response>
+        /// <response code="200">Успешное выполнение</response>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ScResult<Event>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<ScResult<Event>> PutEvent(Guid id, DateTime starts, DateTime ends, string name, Guid imageId, Guid spaceId, int ticketQuantity = 0, string description = "")
         {
-            var event_ = new Event()
+            var result = new Event()
             {   Id=id,
                 Starts = starts,
                 Ends = ends,
@@ -121,23 +130,22 @@ namespace EventsApi.Features.Controllers
                 SpaceId = spaceId,
                 TicketsQuantity = ticketQuantity
             };
-            await _validator.ValidateAndThrowAsync(event_);
-            return await _mediator.Send(new UpdateEventCommand(event_));
+            await _validator.ValidateAndThrowAsync(result);
+            return await _mediator.Send(new UpdateEventCommand(result));
         }
 
         // DELETE api/events/{id}
         /// <summary>
-        /// removes event from the list
+        /// убирать мероприятие по его guid
         /// </summary>
-        /// <param name="id">id of event to remove</param>
-        /// <returns>result string</returns>
+        /// <param name="id">guid мероприятия, которое нужно убрать</param>
+        /// <returns>строка об успехе операции</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Плохие данные клиента</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(ScResult<string>), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<string>> DeleteEvent(Guid id)
-        {
-            return await _mediator.Send(new DeleteEventCommand(id)); ;
-        }
+        public async Task<ScResult<string>> DeleteEvent(Guid id) => await _mediator.Send(new DeleteEventCommand(id));
     }
 }

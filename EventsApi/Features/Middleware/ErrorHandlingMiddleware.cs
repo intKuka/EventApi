@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 using FluentValidation;
+using JetBrains.Annotations;
 using SC.Internship.Common.Exceptions;
 using SC.Internship.Common.ScResult;
 
@@ -16,6 +17,7 @@ namespace EventsApi.Features.Middleware
             _next = next;
         }
 
+        [UsedImplicitly]
         public async Task Invoke(HttpContext context)
         {
             try
@@ -63,7 +65,7 @@ namespace EventsApi.Features.Middleware
                 result.Error.ModelState[failure.PropertyName].Add(failure.ErrorMessage);
             }
 
-            var newResult = JsonSerializer.Serialize<ScResult>(result);
+            var newResult = JsonSerializer.Serialize(result);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
             return context.Response.WriteAsync(newResult);

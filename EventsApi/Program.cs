@@ -19,7 +19,7 @@ builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    var filePath = Path.Combine(System.AppContext.BaseDirectory, "EventsApi.xml");
+    var filePath = Path.Combine(AppContext.BaseDirectory, "EventsApi.xml");
     c.IncludeXmlComments(filePath);
 });
 
@@ -36,7 +36,11 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseCors("corsPolicy");
 
-app.UseHttpsRedirection();
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+
+}
 
 app.UseAuthorization();
 

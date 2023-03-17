@@ -1,6 +1,5 @@
 ﻿using EventsApi.Features.Models;
 using SC.Internship.Common.Exceptions;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace EventsApi.Features.Spaces
 {

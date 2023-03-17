@@ -8,6 +8,8 @@ using SC.Internship.Common.ScResult;
 namespace EventsApi.Features.Events.Handlers
 {
     [UsedImplicitly]
+    // ReSharper disable once InconsistentNaming
+    // копирует название операции для удобства
     public class GetEventsHandler : IRequestHandler<GetEventsQuery, ScResult<IEnumerable<Event>>>
     {
         private readonly IEventData _eventData;

@@ -14,12 +14,13 @@ namespace EventsApi.Features.Tickets.Data
             if (freeTicket == null) throw new ScException("Нет свободных билетов");
             freeTicket.Owner = userGuid;
             return freeTicket;
+
         }
 
         public static async Task<List<Ticket>> CheckUserTicket(Event eEvent, Guid userGuid)
         {
             var user = TempUserData.GetById(userGuid);
-            return await Task.FromResult(eEvent.TicketList.Where(ticket => ticket.Owner == userGuid).ToList());
+            return await Task.FromResult(eEvent.TicketList.Where(ticket => ticket.Owner == user.Id).ToList());
         }
     }
 }
