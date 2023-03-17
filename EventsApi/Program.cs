@@ -1,8 +1,11 @@
+using System.Text;
 using EventsApi.Features.Events.Data;
 using EventsApi.Features.Events.Validators;
 using EventsApi.Features.Middleware;
 using EventsApi.Features.Models;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +39,11 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseCors("corsPolicy");
 
-app.UseHttpsRedirection();
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+
+}
 
 app.UseAuthorization();
 

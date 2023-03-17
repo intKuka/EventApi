@@ -1,11 +1,8 @@
-﻿using EventsApi.Features.Events.Commands;
-using EventsApi.Features.Events.Queries;
-using EventsApi.Features.Images;
+﻿using EventsApi.Features.Images;
 using EventsApi.Features.Models;
 using EventsApi.Features.Spaces;
 using EventsApi.Features.Users;
-using FluentValidation;
-using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -14,6 +11,7 @@ namespace EventsApi.Features.Controllers
     [Produces("application/json")]
     [Route("api/info")]
     [ApiController]
+    [Authorize]
     public class InfoController : ControllerBase
     {
         // GET: api/info/images
@@ -36,9 +34,11 @@ namespace EventsApi.Features.Controllers
         /// </summary>
         /// <param name="id">existing image id</param>
         /// <returns>existing image</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Плохие данные клиента</response>
         [HttpGet("images/{id}")]
         [ProducesResponseType(typeof(Event), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public ActionResult GetImageById(Guid id)
         {
@@ -56,6 +56,7 @@ namespace EventsApi.Features.Controllers
         /// get all spaces
         /// </summary>
         /// <returns>list of all spaces</returns>
+        /// <response code="200">Успешное выполнение</response>
         [HttpGet("spaces")]
         [ProducesResponseType(typeof(List<EventImage>), 200)]
         [ProducesDefaultResponseType]
@@ -71,9 +72,11 @@ namespace EventsApi.Features.Controllers
         /// </summary>
         /// <param name="id">existing space id</param>
         /// <returns>existing space</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Плохие данные клиента</response>
         [HttpGet("spaces/{id}")]
         [ProducesResponseType(typeof(Event), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public ActionResult GetSpaceById(Guid id)
         {
@@ -90,6 +93,7 @@ namespace EventsApi.Features.Controllers
         /// get all users
         /// </summary>
         /// <returns>list of all users</returns>
+        /// <response code="200">Успешное выполнение</response>
         [HttpGet("users")]
         [ProducesResponseType(typeof(List<EventImage>), 200)]
         [ProducesDefaultResponseType]
@@ -105,9 +109,11 @@ namespace EventsApi.Features.Controllers
         /// </summary>
         /// <param name="id">existing user id</param>
         /// <returns>existing user</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Плохие данные клиента</response>
         [HttpGet("users/{id}")]
         [ProducesResponseType(typeof(Event), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public ActionResult GetUserById(Guid id)
         {
