@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "TyrpLbJjjKRFPJsmqkj3aAtNLcn7fq+pwgCEde8cjZ1d1Kr7ALuZEH/pjMD7Q+jp06TgdAaBSca7awA71rIkgQ==",
+  "dgSpecHash": "+ClAHJ0X+CZIxkEWPrzALa+Ca5gfW0QQgkbLeV1LccyDlRLI3Zb8URqL2cPduttMLD7ZR4aU0BNHttTb8dLyOQ==",
   "success": true,
   "projectFilePath": "D:\\Visul Studio\\EventsApi\\EventsApi\\EventsApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Kuka\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",
+    "C:\\Users\\Kuka\\.nuget\\packages\\jetbrains.annotations\\2022.3.1\\jetbrains.annotations.2022.3.1.nupkg.sha512",
     "C:\\Users\\Kuka\\.nuget\\packages\\mediatr\\12.0.1\\mediatr.12.0.1.nupkg.sha512",
     "C:\\Users\\Kuka\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\Kuka\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.3\\microsoft.aspnetcore.openapi.7.0.3.nupkg.sha512",
