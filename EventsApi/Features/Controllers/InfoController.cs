@@ -11,7 +11,6 @@ namespace EventsApi.Features.Controllers
     [Produces("application/json")]
     [Route("api/info")]
     [ApiController]
-    [Authorize]
     public class InfoController : ControllerBase
     {
         // GET: api/info/images
