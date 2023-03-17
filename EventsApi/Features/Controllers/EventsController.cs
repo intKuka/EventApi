@@ -28,9 +28,10 @@ namespace EventsApi.Features.Controllers
 
         // GET api/events
         /// <summary>
-        /// get all events
+        /// получить все мероприятия
         /// </summary>
-        /// <returns>list of all events</returns>
+        /// <returns>список всех мероприятий</returns>
+        /// <response code="200">Успешное выполнение</response>
         [HttpGet]
         [ProducesResponseType(typeof(ScResult<IEnumerable<Event>>), 200)]
         [ProducesDefaultResponseType]
@@ -42,13 +43,15 @@ namespace EventsApi.Features.Controllers
 
         // GET api/events/{id}
         /// <summary>
-        /// search and returns an event by its id
+        /// ищет и возвращает мероприятие по его id
         /// </summary>
-        /// <param name="id">existing event id</param>
-        /// <returns>existing event</returns>
+        /// <param name="id">id существующего мероприятия</param>
+        /// <returns>существующее мероприятие</returns>
+        /// <response code="400">Плохие данные клиента</response>
+        /// <response code="200">Успешное выполнение</response>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ScResult<Event>), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<ScResult<Event>> GetEventById(Guid id)
         {
@@ -69,6 +72,8 @@ namespace EventsApi.Features.Controllers
         /// <param name="description">описание</param>
         /// <returns>created event</returns>
         /// <remarks>data installation format: yyyy-mm-ddThh:MM:ss</remarks>
+        /// <response code="400">Плохие данные клиента</response>
+        /// <response code="200">Успешное выполнение</response>
         [HttpPost]
         [ProducesResponseType(typeof(ScResult<Event>), 201)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -105,6 +110,8 @@ namespace EventsApi.Features.Controllers
         /// <param name="description">description</param>
         /// <returns>altered event</returns>
         /// <remarks>data installation format: yyyy-mm-ddThh:MM:ss</remarks>
+        /// <response code="400">Плохие данные клиента</response>
+        /// <response code="200">Успешное выполнение</response>
         [HttpPut("{id}")]
         [ProducesResponseType(typeof(ScResult<Event>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -131,9 +138,11 @@ namespace EventsApi.Features.Controllers
         /// </summary>
         /// <param name="id">id of event to remove</param>
         /// <returns>result string</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Плохие данные клиента</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(ScResult<string>), 200)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<ScResult<string>> DeleteEvent(Guid id)
         {
