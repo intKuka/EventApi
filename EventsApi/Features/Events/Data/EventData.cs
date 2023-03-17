@@ -1,10 +1,13 @@
-﻿using EventsApi.Features.Events.Queries;
+﻿using EventsApi.Features.Images;
+using EventsApi.Features.Models;
+using EventsApi.Features.Spaces;
+using SC.Internship.Common.Exceptions;
 
 namespace EventsApi.Features.Events.Data
 {
     public class EventData : IEventData
     {
-        public static List<Event> events = new()
+        private static readonly List<Event> Events = new()
         {
             new Event
             {
@@ -13,51 +16,76 @@ namespace EventsApi.Features.Events.Data
                 Ends=DateTime.UtcNow.AddHours(5),
                 Name="Some Event",
                 Description="Very fun event",
-                ImageId=TempImageData.images[0].Id,
-                SpaceId=TempSpaceData.spaces[1].Id
+                ImageId=TempImageData.Images[0].Id,
+                SpaceId=TempSpaceData.Spaces[1].Id,
+                TicketsQuantity = 5,
+                TicketList =
+                {
+                    new Ticket(){Id=Guid.NewGuid(), Seat = 0},
+                    new Ticket(){Id=Guid.NewGuid(), Seat = 1},
+                    new Ticket(){Id=Guid.NewGuid(), Seat = 2},
+                    new Ticket(){Id=Guid.NewGuid(), Seat = 3},
+                    new Ticket(){Id=Guid.NewGuid(), Seat = 4},
+                }
             },
         };
 
 
-        public async Task<IEnumerable<Event>?> GetAll()
+        public async Task<IEnumerable<Event>> GetAllEvents()
         {
-            return await Task.FromResult(events);
+            return await Task.FromResult(Events);
         }
 
-        public async Task<Event?> GetById(Guid id)
-        {  
-            return await Task.FromResult(events.FirstOrDefault(e => e.Id == id));
+        public async Task<Event> GetEventById(Guid id)
+        {
+            var existEvent = await Task.FromResult(Events.FirstOrDefault(e => e.Id == id));
+            return existEvent ?? throw new ScException("Мероприятие не найдено");
         }
 
-        public async Task Create(Event newEvent)
+        public async Task PostEvent(Event newEvent)
         {
-            events.Add(newEvent);
+            if(newEvent.TicketsQuantity > 0) AddTickets(newEvent, newEvent.TicketsQuantity);
+            Events.Add(newEvent);
             await Task.CompletedTask;
         }
 
-        public async Task<Event?> Update(Event update)
+        public async Task UpdateEvent(Event update)
         {
-            var existEvent = await Task.FromResult(events.FirstOrDefault(e => e.Id == update.Id));
+            var existEvent = await Task.FromResult(Events.FirstOrDefault(e => e.Id == update.Id));
             if (existEvent != null)
             {
-                events.Remove(existEvent);
-                events.Add(update);
-                return update;
+                if (update.TicketsQuantity > 0) AddTickets(update, update.TicketsQuantity);
+                Events.Remove(existEvent);
+                Events.Add(update);
+                await Task.CompletedTask;
             }
-            return null;
-        }
-
-        public async Task<string?> Delete(Guid id)
-        {
-            var existEvent = await Task.FromResult(events.FirstOrDefault(e => e.Id == id));
-            if (existEvent != null)
+            else
             {
-                events.Remove(existEvent);
-                return $"Event {id} has deleted";
+                throw new ScException("Мероприятие не найдено");
             }
-            return null;
         }
 
+        public async Task<string> DeleteEvent(Guid id)
+        {
+            var existEvent = await Task.FromResult(Events.First(e => e.Id == id));
+            switch (existEvent)
+            {
+                case null:
+                    throw new ScException("Мероприятие не найдено");
+                default:
+                    Events.Remove(existEvent);
+                    return $"Мероприятие {id} успешно удалено";
+            }
+        }
+
+        private static void AddTickets(Event newEvent, int quantity)
+        {
+            for (var i = 0; i < quantity; i++)
+            {
+               newEvent.TicketList.Add(new Ticket(){Id=Guid.NewGuid(), Seat = i});
+            }
+        }
         
+
     }
 }

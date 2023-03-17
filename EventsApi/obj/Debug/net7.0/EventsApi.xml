@@ -4,46 +4,20 @@
         <name>EventsApi</name>
     </assembly>
     <members>
-        <member name="M:EventsApi.Features.Events.AdditionalController.GetImages">
-            <summary>
-            get all images
-            </summary>
-            <returns>list of all images</returns>
-        </member>
-        <member name="M:EventsApi.Features.Events.AdditionalController.GetImageById(System.Guid)">
-            <summary>
-            searchs and returns an image by its id
-            </summary>
-            <param name="id">existing image id</param>
-            <returns>existing image</returns>
-        </member>
-        <member name="M:EventsApi.Features.Events.AdditionalController.GetSpaces">
-            <summary>
-            get all spaces
-            </summary>
-            <returns>list of all spaces</returns>
-        </member>
-        <member name="M:EventsApi.Features.Events.AdditionalController.GetSpaceById(System.Guid)">
-            <summary>
-            searchs and returns a space by its id
-            </summary>
-            <param name="id">existing space id</param>
-            <returns>existing space</returns>
-        </member>
-        <member name="M:EventsApi.Features.Events.EventsController.GetEvents">
+        <member name="M:EventsApi.Features.Controllers.EventsController.GetEvents">
             <summary>
             get all events
             </summary>
             <returns>list of all events</returns>
         </member>
-        <member name="M:EventsApi.Features.Events.EventsController.GetEventById(System.Guid)">
+        <member name="M:EventsApi.Features.Controllers.EventsController.GetEventById(System.Guid)">
             <summary>
-            searchs and returns an event by its id
+            search and returns an event by its id
             </summary>
             <param name="id">existing event id</param>
             <returns>existing event</returns>
         </member>
-        <member name="M:EventsApi.Features.Events.EventsController.PostEvent(System.DateTime,System.DateTime,System.String,System.Guid,System.Guid,System.String)">
+        <member name="M:EventsApi.Features.Controllers.EventsController.PostEvent(System.DateTime,System.DateTime,System.String,System.Guid,System.Guid,System.Int32,System.String)">
             <summary>
             creates new event
             </summary>
@@ -52,11 +26,12 @@
             <param name="name">name of event</param>
             <param name="imageId">image id for this event</param>
             <param name="spaceId">space id for this event</param>
-            <param name="description">description</param>
+            <param name="ticketQuantity">количество билетов для мероприятия</param>
+            <param name="description">описание</param>
             <returns>created event</returns>
             <remarks>data installation format: yyyy-mm-ddThh:MM:ss</remarks>
         </member>
-        <member name="M:EventsApi.Features.Events.EventsController.PutEvent(System.Guid,System.DateTime,System.DateTime,System.String,System.Guid,System.Guid,System.String)">
+        <member name="M:EventsApi.Features.Controllers.EventsController.PutEvent(System.Guid,System.DateTime,System.DateTime,System.String,System.Guid,System.Guid,System.Int32,System.String)">
             <summary>
             alters event into a new one
             </summary>
@@ -66,16 +41,56 @@
             <param name="name">name of event</param>
             <param name="imageId">image id for this event</param>
             <param name="spaceId">space id for this event</param>
+            <param name="ticketQuantity"></param>
             <param name="description">description</param>
             <returns>altered event</returns>
             <remarks>data installation format: yyyy-mm-ddThh:MM:ss</remarks>
         </member>
-        <member name="M:EventsApi.Features.Events.EventsController.DeleteEvent(System.Guid)">
+        <member name="M:EventsApi.Features.Controllers.EventsController.DeleteEvent(System.Guid)">
             <summary>
             removes event from the list
             </summary>
-            <param name="id">id of evetn to remove</param>
+            <param name="id">id of event to remove</param>
             <returns>result string</returns>
+        </member>
+        <member name="M:EventsApi.Features.Controllers.InfoController.GetImages">
+            <summary>
+            get all images
+            </summary>
+            <returns>list of all images</returns>
+        </member>
+        <member name="M:EventsApi.Features.Controllers.InfoController.GetImageById(System.Guid)">
+            <summary>
+            search and returns an image by its id
+            </summary>
+            <param name="id">existing image id</param>
+            <returns>existing image</returns>
+        </member>
+        <member name="M:EventsApi.Features.Controllers.InfoController.GetSpaces">
+            <summary>
+            get all spaces
+            </summary>
+            <returns>list of all spaces</returns>
+        </member>
+        <member name="M:EventsApi.Features.Controllers.InfoController.GetSpaceById(System.Guid)">
+            <summary>
+            search and returns a space by its id
+            </summary>
+            <param name="id">existing space id</param>
+            <returns>existing space</returns>
+        </member>
+        <member name="M:EventsApi.Features.Controllers.InfoController.GetUsers">
+            <summary>
+            get all users
+            </summary>
+            <returns>list of all users</returns>
+        </member>
+        <member name="M:EventsApi.Features.Controllers.InfoController.GetUserById(System.Guid)">
+            <summary>
+            search and returns an user by its id
+            </summary>
+            <param name="id">existing user id</param>
+            <returns>existing user</returns>
         </member>
     </members>
 </doc>
