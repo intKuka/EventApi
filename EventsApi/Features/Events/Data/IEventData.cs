@@ -1,11 +1,13 @@
-﻿namespace EventsApi.Features.Events.Data
+﻿using EventsApi.Features.Models;
+
+namespace EventsApi.Features.Events.Data
 {
     public interface IEventData
     {
-        Task Create(Event newEvent);
-        Task<string?> Delete(Guid id);
-        Task<IEnumerable<Event>?> GetAll();
-        Task<Event?> GetById(Guid id);
-        Task<Event?> Update(Event update);
+        Task PostEvent(Event newEvent);
+        Task<string> DeleteEvent(Guid id);
+        Task<IEnumerable<Event>> GetAllEvents();
+        Task<Event> GetEventById(Guid id);
+        Task UpdateEvent(Event update);
     }
 }

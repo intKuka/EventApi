@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventsApi", "EventsApi\EventsApi.csproj", "{4041E1EB-C3D7-4C84-ADB5-48F6716B3247}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventsApi", "EventsApi\EventsApi.csproj", "{4041E1EB-C3D7-4C84-ADB5-48F6716B3247}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "submodules", "submodules", "{434C05BF-53E5-4E7B-9139-A09C1D5AB390}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.Internship.Common", "SC.Internship.Common\SC.Internship.Common\SC.Internship.Common.csproj", "{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{4041E1EB-C3D7-4C84-ADB5-48F6716B3247}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4041E1EB-C3D7-4C84-ADB5-48F6716B3247}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4041E1EB-C3D7-4C84-ADB5-48F6716B3247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5054F3D2-78B5-4968-9271-00AAB1DCFDCB} = {434C05BF-53E5-4E7B-9139-A09C1D5AB390}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FEA790B8-39AA-4871-B178-8D32BC833FCC}

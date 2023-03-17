@@ -36,3 +36,6 @@ D:\Visul Studio\EventsApi\EventsApi\bin\Debug\net7.0\MediatR.dll
 D:\Visul Studio\EventsApi\EventsApi\bin\Debug\net7.0\MediatR.Contracts.dll
 D:\Visul Studio\EventsApi\EventsApi\bin\Debug\net7.0\EventsApi.xml
 D:\Visul Studio\EventsApi\EventsApi\obj\Debug\net7.0\EventsApi.xml
+D:\Visul Studio\EventsApi\EventsApi\bin\Debug\net7.0\JetBrains.Annotations.dll
+D:\Visul Studio\EventsApi\EventsApi\bin\Debug\net7.0\SC.Internship.Common.dll
+D:\Visul Studio\EventsApi\EventsApi\bin\Debug\net7.0\SC.Internship.Common.pdb
