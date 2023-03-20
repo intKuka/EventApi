@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "submodules", "submodules", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.Internship.Common", "SC.Internship.Common\SC.Internship.Common\SC.Internship.Common.csproj", "{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{60DE93C1-5A10-4457-8062-F259BB425A66}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60DE93C1-5A10-4457-8062-F259BB425A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60DE93C1-5A10-4457-8062-F259BB425A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60DE93C1-5A10-4457-8062-F259BB425A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60DE93C1-5A10-4457-8062-F259BB425A66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
