@@ -1,6 +1,6 @@
-﻿using EventsApi.Features.Events.Data;
-using EventsApi.Features.Events.Queries;
+﻿using EventsApi.Features.Events.Queries;
 using EventsApi.Features.Models;
+using EventsApi.MongoDb;
 using JetBrains.Annotations;
 using MediatR;
 using SC.Internship.Common.ScResult;
@@ -11,9 +11,9 @@ namespace EventsApi.Features.Events.Handlers
     // ReSharper disable once InconsistentNaming
     public class GetEventByIdHandler : IRequestHandler<GetEventByIdQuery, ScResult<Event>>
     {
-        private readonly IEventData _eventData;
+        private readonly IEventRepo _eventData;
 
-        public GetEventByIdHandler(IEventData eventData)
+        public GetEventByIdHandler(IEventRepo eventData)
         {
             _eventData = eventData;
         }

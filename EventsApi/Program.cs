@@ -1,8 +1,12 @@
-using EventsApi.Features.Events.Data;
 using EventsApi.Features.Events.Validators;
 using EventsApi.Features.Middleware;
 using EventsApi.Features.Models;
+using EventsApi.MongoDb;
 using FluentValidation;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +14,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+//mongoDb
+BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
+{
+    var settings = builder.Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+    return new MongoClient(settings!.ConnectionString);
+});
+
+//key dependencies
 builder.Services.AddScoped<IValidator<Event>, EventValidator>();
-builder.Services.AddSingleton<IEventData, EventData>();
+builder.Services.AddSingleton<IEventRepo, MongoDbRepo>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build 

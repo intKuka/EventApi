@@ -1,6 +1,6 @@
 ﻿using EventsApi.Features.Events.Commands;
-using EventsApi.Features.Events.Data;
 using EventsApi.Features.Models;
+using EventsApi.MongoDb;
 using JetBrains.Annotations;
 using MediatR;
 using SC.Internship.Common.ScResult;
@@ -10,8 +10,8 @@ namespace EventsApi.Features.Events.Handlers
     [UsedImplicitly]
     public class CreateEventHandler : IRequestHandler<CreateEventCommand, ScResult<Event>>
     {
-        private readonly IEventData _eventData;
-        public CreateEventHandler(IEventData eventData)
+        private readonly IEventRepo _eventData;
+        public CreateEventHandler(IEventRepo eventData)
         {
             _eventData = eventData;
         }

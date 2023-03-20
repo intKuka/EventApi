@@ -1,6 +1,6 @@
-﻿using EventsApi.Features.Events.Data;
-using EventsApi.Features.Events.Queries;
+﻿using EventsApi.Features.Events.Queries;
 using EventsApi.Features.Models;
+using EventsApi.MongoDb;
 using JetBrains.Annotations;
 using MediatR;
 using SC.Internship.Common.ScResult;
@@ -12,8 +12,8 @@ namespace EventsApi.Features.Events.Handlers
     // копирует название операции для удобства
     public class GetEventsHandler : IRequestHandler<GetEventsQuery, ScResult<IEnumerable<Event>>>
     {
-        private readonly IEventData _eventData;
-        public GetEventsHandler(IEventData eventData)
+        private readonly IEventRepo _eventData;
+        public GetEventsHandler(IEventRepo eventData)
         {
             _eventData = eventData;
         }
