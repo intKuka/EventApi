@@ -1,10 +1,13 @@
 ﻿using EventsApi.Features.Events.Commands;
 using EventsApi.Features.Events.Queries;
+using EventsApi.Features.Images;
 using EventsApi.Features.Models;
+using EventsApi.Features.Spaces;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SC.Internship.Common.ScResult;
+using ZstdSharp;
 
 
 namespace EventsApi.Features.Controllers
@@ -50,7 +53,7 @@ namespace EventsApi.Features.Controllers
         [ProducesResponseType(typeof(ScResult<Event>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<Event>> GetEventById(Guid id)
+        public async Task<ScResult<Event>> GetEventById([FromRoute] Guid id)
         {
             return await _mediator.Send(new GetEventByIdQuery(id));
         }
@@ -77,22 +80,13 @@ namespace EventsApi.Features.Controllers
         [ProducesResponseType(typeof(ScResult<Event>), 201)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<Event>> PostEvent(DateTime starts, DateTime ends, string name, Guid imageId, Guid spaceId, int ticketQuantity = 0, string description = "")
+        public async Task<ScResult<Event>> PostEvent([FromBody] Event update)
         {
-            var result = new Event()
-            {
-                Id = Guid.NewGuid(),
-                Starts = starts,
-                Ends = ends,
-                Name = name,
-                Description = description,
-                ImageId = imageId,
-                SpaceId = spaceId,
-                TicketsQuantity = ticketQuantity
-            };
-            await _validator.ValidateAndThrowAsync(result);
+            TempImageData.GetById(update.ImageId);
+            TempSpaceData.GetById(update.SpaceId);
+            await _validator.ValidateAndThrowAsync(update);
 
-            return await _mediator.Send(new CreateEventCommand(result));
+            return await _mediator.Send(new CreateEventCommand(update));
         }
 
         // PUT api/events/{id}
@@ -114,24 +108,16 @@ namespace EventsApi.Features.Controllers
         /// </remarks>
         /// <response code="400">Плохие данные клиента</response>
         /// <response code="200">Успешное выполнение</response>
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(typeof(ScResult<Event>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<Event>> PutEvent(Guid id, DateTime starts, DateTime ends, string name, Guid imageId, Guid spaceId, int ticketQuantity = 0, string description = "")
+        public async Task<ScResult<Event>> PutEvent([FromBody] Event update)
         {
-            var result = new Event()
-            {   Id=id,
-                Starts = starts,
-                Ends = ends,
-                Name = name,
-                Description = description,
-                ImageId = imageId,
-                SpaceId = spaceId,
-                TicketsQuantity = ticketQuantity
-            };
-            await _validator.ValidateAndThrowAsync(result);
-            return await _mediator.Send(new UpdateEventCommand(result));
+            TempImageData.GetById(update.ImageId);
+            TempSpaceData.GetById(update.SpaceId);
+            await _validator.ValidateAndThrowAsync(update);
+            return await _mediator.Send(new UpdateEventCommand(update));
         }
 
         // DELETE api/events/{id}
@@ -146,6 +132,6 @@ namespace EventsApi.Features.Controllers
         [ProducesResponseType(typeof(ScResult<string>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<string>> DeleteEvent(Guid id) => await _mediator.Send(new DeleteEventCommand(id));
+        public async Task<ScResult<string>> DeleteEvent([FromRoute] Guid id) => await _mediator.Send(new DeleteEventCommand(id));
     }
 }

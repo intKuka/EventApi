@@ -1,9 +1,13 @@
-﻿namespace EventsApi.Features.Models
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace EventsApi.Features.Models
 {
     public class Event
     {
-        public Guid Id { get; init; }
-        public DateTime Starts { get; set; }
+        [BsonId]
+        public Guid Id { get; init; } = Guid.NewGuid();
+        public DateTime Starts { get; set; } = DateTime.UtcNow;
         public DateTime Ends { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }

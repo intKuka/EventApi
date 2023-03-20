@@ -52,6 +52,7 @@ namespace EventsApi.Features.Middleware
             const HttpStatusCode code = HttpStatusCode.BadRequest;
             var result = new ScResult(new ScError()
             {
+                Message = "Имееются некорректные данные",
                 ModelState = new Dictionary<string, List<string>>()
 
             });
