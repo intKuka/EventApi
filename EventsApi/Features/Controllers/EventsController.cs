@@ -133,5 +133,8 @@ namespace EventsApi.Features.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
         public async Task<ScResult<string>> DeleteEvent([FromRoute] Guid id) => await _mediator.Send(new DeleteEventCommand(id));
+
+
+
     }
 }

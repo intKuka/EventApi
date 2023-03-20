@@ -34,7 +34,7 @@ namespace EventsApi.Features.Controllers
         [ProducesResponseType(typeof(ScResult<Ticket>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<Ticket>> IssueTicket(Guid eventId, Guid userId)
+        public async Task<ScResult<Ticket>> IssueTicket([FromQuery] Guid eventId, [FromQuery] Guid userId)
         {
             var existingEvent = await _mediator.Send(new GetEventByIdQuery(eventId));
             return await _mediator.Send(new IssueTicketCommand(existingEvent.Result!, userId));
@@ -53,10 +53,29 @@ namespace EventsApi.Features.Controllers
         [ProducesResponseType(typeof(ScResult<Ticket>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<IEnumerable<Ticket>>> CheckUserTicket(Guid eventId, Guid userId)
+        public async Task<ScResult<IEnumerable<Ticket>>> CheckUserTicket([FromQuery] Guid eventId, [FromQuery] Guid userId)
         {
             var existingEvent = await _mediator.Send(new GetEventByIdQuery(eventId));
             return await _mediator.Send(new CheckUserTicketQuery(existingEvent.Result!, userId));
         }
+
+        // GET api/tickets/checkSeat
+        /// <summary>
+        /// Проверяет свободно ли указанное места на мероприятии
+        /// </summary>
+        /// <param name="eventId"></param>
+        /// <param name="seat"></param>
+        /// <returns></returns>
+        [HttpGet("checkSeat")]
+        [ProducesResponseType(typeof(ScResult<bool>), 200)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
+        public async Task<ScResult<bool>> CheckSeat([FromQuery] Guid eventId, [FromQuery] int seat)
+        {
+            var existingEvent = await _mediator.Send(new GetEventByIdQuery(eventId));
+            return await _mediator.Send(new CheckSeatQuery(existingEvent.Result!, seat));
+        }
+
+
     }
 }

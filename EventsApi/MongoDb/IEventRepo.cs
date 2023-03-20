@@ -9,4 +9,5 @@ public interface IEventRepo
     Task<IEnumerable<Event>> GetAllEvents();
     Task<Event> GetEventById(Guid id);
     Task UpdateEvent(Event update);
+    public Task<Ticket> IssueTicket(Event eEvent, Guid userGuid);
 }

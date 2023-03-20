@@ -1,5 +1,7 @@
 ﻿using MongoDB.Driver;
 using EventsApi.Features.Models;
+using EventsApi.Features.Tickets.Data;
+using EventsApi.Features.Users;
 using MongoDB.Bson;
 using SC.Internship.Common.Exceptions;
 
@@ -60,10 +62,24 @@ namespace EventsApi.MongoDb
         {
             eEvent.TicketList = new List<Ticket>();
             if (eEvent.TicketsQuantity == 0) return;
-            for (var i = 1; i <= eEvent.TicketsQuantity; i++)
+            for (var i = 0; i < eEvent.TicketsQuantity; i++)
             {
-                eEvent.TicketList.Add(new Ticket() { Id = Guid.NewGuid(), Seat = i });
+                eEvent.TicketList.Add(new Ticket());
+                if (eEvent.HasNumeration) eEvent.TicketList[i].Seat = i+1;
             }
+        }
+        
+        //обновляет запись билета, меняя guid владельца
+        public async Task<Ticket> IssueTicket(Event eEvent, Guid userGuid)
+        {
+            var user = TempUserData.GetById(userGuid);
+            if (user == null) throw new ScException("Пользователь не найден");
+            var freeTicket = await Task.FromResult(eEvent.TicketList.FirstOrDefault(t => t.Owner == Guid.Empty));
+            if (freeTicket == null) throw new ScException("Нет свободных билетов");
+            freeTicket.Owner = userGuid;
+            var filter = _filterBuilder.Eq("_id", eEvent.Id);
+            await _eventsCollection.FindOneAndReplaceAsync(filter, eEvent);
+            return freeTicket;
         }
     }
 }

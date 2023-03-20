@@ -15,5 +15,6 @@ namespace EventsApi.Features.Models
         public Guid SpaceId { get; set; }
         public int TicketsQuantity { get; set; }
         public List<Ticket> TicketList { get; set; } = new();
+        public bool HasNumeration { get; set; }
     }
 }
