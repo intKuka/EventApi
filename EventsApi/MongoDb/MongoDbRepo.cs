@@ -1,9 +1,9 @@
 ﻿using MongoDB.Driver;
-using EventsApi.Features.Models;
-using EventsApi.Features.Tickets.Data;
-using EventsApi.Features.Users;
 using MongoDB.Bson;
 using SC.Internship.Common.Exceptions;
+using EventsApi.Features.Events;
+using EventsApi.Features.Tickets;
+using EventsApi.Stubs.Users;
 
 namespace EventsApi.MongoDb
 {

@@ -1,7 +1,6 @@
-using EventsApi.Features.Controllers;
-using EventsApi.Features.Events.Commands;
-using EventsApi.Features.Events.Queries;
-using EventsApi.Features.Models;
+using EventsApi.Features.Events;
+using EventsApi.Features.Events.CreateEvent;
+using EventsApi.Features.Events.GetEventById;
 using FluentValidation;
 using MediatR;
 using Moq;
@@ -26,7 +25,7 @@ namespace UnitTests
         public async Task GetEventById_WithUnexistingId_ReturnsNull()
         {
             // Arrange
-            _mediator.Setup(x => x.Send(new GetEventByIdQuery(It.IsAny<Guid>()), default)).ReturnsAsync(() => null);
+            _mediator.Setup(x => x.Send(new GetEventByIdQuery(It.IsAny<Guid>()), default)).ReturnsAsync(() => null!);
 
             // Act
             var eEvent = await _eventsController.GetEventById(Guid.NewGuid());

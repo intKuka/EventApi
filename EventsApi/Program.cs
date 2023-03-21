@@ -1,6 +1,5 @@
-using EventsApi.Features.Events.Validators;
-using EventsApi.Features.Middleware;
-using EventsApi.Features.Models;
+using EventsApi.Features.Events;
+using EventsApi.Middleware;
 using EventsApi.MongoDb;
 using FluentValidation;
 using MongoDB.Bson;
@@ -16,7 +15,7 @@ builder.Services.AddControllers();
 
 //mongoDb
 BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
-builder.Services.AddSingleton<IMongoClient>(serviceProvider =>
+builder.Services.AddSingleton<IMongoClient>(_ =>
 {
     var settings = builder.Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
     return new MongoClient(settings!.ConnectionString);
