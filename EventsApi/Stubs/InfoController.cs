@@ -16,6 +16,7 @@ namespace EventsApi.Stubs
         /// <summary>
         /// получить все изображения
         /// </summary>
+        /// <returns>список всех изображенией</returns>
         /// <response code="200">Успешное выполнение</response>
         /// <returns>список изображений</returns>
         [HttpGet("images")]
@@ -29,13 +30,13 @@ namespace EventsApi.Stubs
 
         // GET api/info/images/{id}
         /// <summary>
-        /// search and returns an image by its id
+        /// ищет и возвращает изображение по guid
         /// </summary>
-        /// <param name="id">existing image id</param>
-        /// <returns>existing image</returns>
+        /// <param name="id">guid существующего изображения</param>
+        /// <returns>существующее изображение</returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Плохие данные клиента</response>
-        [HttpGet("images/{id}")]
+        [HttpGet("images/{id:guid}")]
         [ProducesResponseType(typeof(EventImage), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -48,9 +49,9 @@ namespace EventsApi.Stubs
 
         // GET: api/info/spaces
         /// <summary>
-        /// get all spaces
+        /// получить все пространства
         /// </summary>
-        /// <returns>list of all spaces</returns>
+        /// <returns>список всех пространств</returns>
         /// <response code="200">Успешное выполнение</response>
         [HttpGet("spaces")]
         [ProducesResponseType(typeof(ScResult<IEnumerable<UserSpace>>), 200)]
@@ -63,13 +64,13 @@ namespace EventsApi.Stubs
 
         // GET api/info/spaces/{id}
         /// <summary>
-        /// search and returns a space by its id
+        /// ищет и возвращает пространство по guid
         /// </summary>
-        /// <param name="id">existing space id</param>
-        /// <returns>existing space</returns>
+        /// <param name="id">guid существующего пространства</param>
+        /// <returns>существующее пространство</returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Плохие данные клиента</response>
-        [HttpGet("spaces/{id}")]
+        [HttpGet("spaces/{id:guid}")]
         [ProducesResponseType(typeof(UserSpace), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -81,9 +82,9 @@ namespace EventsApi.Stubs
 
         // GET: api/info/users
         /// <summary>
-        /// get all users
+        /// получить всех пользователей
         /// </summary>
-        /// <returns>list of all users</returns>
+        /// <returns>список всех пользователей</returns>
         /// <response code="200">Успешное выполнение</response>
         [HttpGet("users")]
         [ProducesResponseType(typeof(ScResult<IEnumerable<User>>), 200)]
@@ -96,13 +97,13 @@ namespace EventsApi.Stubs
 
         // GET api/info/users/{id}
         /// <summary>
-        /// search and returns an user by its id
+        /// ищет и возвращает пользователя по guid
         /// </summary>
-        /// <param name="id">existing user id</param>
-        /// <returns>existing user</returns>
+        /// <param name="id">guid существующего пользователя</param>
+        /// <returns>существующий пользователь</returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Плохие данные клиента</response>
-        [HttpGet("users/{id}")]
+        [HttpGet("users/{id:guid}")]
         [ProducesResponseType(typeof(ScResult<User>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
