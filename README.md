@@ -125,7 +125,7 @@ docker-compose up --build
 > { "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "starts": "2023-03-20T10:25:39.507Z", "ends": "2023-03-20T15:25:39.507Z", "name": "Event", "description": "not so fun event(", "imageId": "4c8ebbeb-ffba-4851-8300-ffd192e99372", "spaceId": "169a4f10-0914-4d8d-b922-3958621a72a5", "ticketsQuantity": 3, "hasNumeration": false }
 
 ### Выдать билет
-`PATCH api/tickets/giveTicket?eventId=3fa85f64-5717-4562-b3fc-2c963f66afa6&userId=4bf981b9-fdd5-4854-b438-af792493a221`
+`PATCH https://localhost:5001/api/tickets/giveTicket?eventId=3fa85f64-5717-4562-b3fc-2c963f66afa6&userId=4bf981b9-fdd5-4854-b438-af792493a221`
 
 ### Удалить мероприятие
 `DELETE https://localhost:5001/api/events/3fa85f64-5717-4562-b3fc-2c963f66afa6`
