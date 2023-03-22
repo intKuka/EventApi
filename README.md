@@ -74,42 +74,10 @@ docker-compose up --build
 `GET api/tickets/checkSeat` : принимает `Guid мероприятия` и `int номер места`, выдает `boolean` о том свободно ли данное место на заданном мероприятии
 
 ## Работа в compose
-Все сводиться к стандартной отправке http запросов
-> Адрес изменяется на http://localhost:8080/api/events
+За исключением сваггера, работа со ссылками остается прежней, но:
+- Порт изменяется на `8080` и доступ запросы отправляются по `http`
 
-### Список методов с параметрами:
-
-### Events Controller
-`GET api/events` : возвращает все мероприятия из БД
-
-`GET api/events?id={id:guid}` : возвращает мероприятие по `Guid`
-
-`POST api/events` : принимает в тело запроса объект типа `Event` и добовляет мероприятие в БД
-
-`PUT api/events` : принимает в тело запроса объект типа `Event` и заменяет собой объект с идентичным `Guid`
-
-`DELETE api/events?id={id:guid}` : удаляет объект из БД по его `Guid`
-
-### Info Controller
-`GET api/info/images` : возвращает все изображения
-
-`GET api/info/images?id={id:guid}` : возвращает изображение по `Guid`
-
-`GET api/info/spaces` : возвращает все пространства
-
-`GET api/info/spaces?id={id:guid}` : возвращает пространство по `Guid`
-
-`GET api/info/users` : возвращает всех пользователей
-
-`GET api/info/users?id={id:guid}` : возвращает пользователя по `Guid`
-
-### Tickets Controller
-
-`PATCH api/tickets/giveTicket?eventId={id:guid}&userId={id:guid}` : принимает `Guid мероприятия` и `Guid пользователя`, устанавливает на следующий свободный билет `Guid пользователя`
-
-`GET api/tickets/checkTicket?eventId={id:guid}&userId={id:guid}` : принимает `Guid мероприятия` и `Guid пользователя`, выдает список билетов, которыми владеет пользователь в рамках заданного мероприятия
-
-`GET api/tickets/checkSeat?eventId={id:guid}&seat={seat:int}` : принимает `Guid мероприятия` и `int номер места`, выдает `boolean` о том свободно ли данное место на заданном мероприятии
+> К примеру http://localhost:8080/api/events
 
 ## Несколько сэмплов
 ### Создать мероприятие
