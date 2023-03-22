@@ -9,7 +9,9 @@
   git submodule init
   git submodule update
   ```
-2. построить docker-compose
+2. зайти в корневую папку проекта
+
+3. построить docker-compose
 ```
 docker-compose up --build
 ```
@@ -102,10 +104,6 @@ docker-compose up --build
 `GET api/info/users?id={id:guid}` : возвращает пользователя по `Guid`
 
 ### Tickets Controller
-Пример полного пути запроса в Postman для работы с БД:
-> GET https://localhost:5001/api/tickets/checkTicket
-или
-> GET http://localhost:5002/api/tickets/checkTicket
 
 `PATCH api/tickets/giveTicket?eventId={id:guid}&userId={id:guid}` : принимает `Guid мероприятия` и `Guid пользователя`, устанавливает на следующий свободный билет `Guid пользователя`
 
