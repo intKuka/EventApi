@@ -3,7 +3,7 @@ services:
   web:
     build: .
     ports:
-     - 8080:80
+    - 8080:80
   identity:       
     image: bizzpo/identityserver4
     environment:
