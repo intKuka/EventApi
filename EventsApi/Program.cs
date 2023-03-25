@@ -25,6 +25,7 @@ builder.Services.AddSingleton<IMongoClient>(_ =>
 builder.Services.AddScoped<IValidator<Event>, EventValidator>();
 builder.Services.AddSingleton<IEventRepo, MongoDbRepo>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddHttpClient();
 
 builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build 
     => build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

@@ -12,6 +12,13 @@ namespace EventsApi.Stubs
     [ApiController]
     public class InfoController : ControllerBase
     {
+        private readonly HttpClient _httpClient;
+
+        public InfoController(IHttpClientFactory factory)
+        {
+            _httpClient = factory.CreateClient();
+        }
+
         // GET: api/info/images
         /// <summary>
         /// получить все изображения
@@ -20,32 +27,13 @@ namespace EventsApi.Stubs
         /// <response code="200">Успешное выполнение</response>
         /// <returns>список изображений</returns>
         [HttpGet("images")]
-        [ProducesResponseType(typeof(ScResult<IEnumerable<EventImage>>), 200)]
+        [ProducesResponseType(typeof(ScResult<string>), 200)]
         [ProducesDefaultResponseType]
-        public ScResult<IEnumerable<EventImage>> GetImages()
+        public async Task<ScResult<string>> GetImages()
         {
-            var images = TempImageData.GetAll();
-            return new ScResult<IEnumerable<EventImage>>(images);
+            using var response = await _httpClient.GetAsync("http://localhost:5051/images");
+            return new ScResult<string>(await response.Content.ReadAsStringAsync());
         }
-
-        // GET api/info/images/{id}
-        /// <summary>
-        /// ищет и возвращает изображение по guid
-        /// </summary>
-        /// <param name="id">guid существующего изображения</param>
-        /// <returns>существующее изображение</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="400">Плохие данные клиента</response>
-        [HttpGet("images/{id:guid}")]
-        [ProducesResponseType(typeof(EventImage), 200)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public ScResult<EventImage> GetImageById(Guid id)
-        {
-            var image = TempImageData.GetById(id);
-            return new ScResult<EventImage>(image);
-        }
-
 
         // GET: api/info/spaces
         /// <summary>
@@ -54,30 +42,12 @@ namespace EventsApi.Stubs
         /// <returns>список всех пространств</returns>
         /// <response code="200">Успешное выполнение</response>
         [HttpGet("spaces")]
-        [ProducesResponseType(typeof(ScResult<IEnumerable<UserSpace>>), 200)]
+        [ProducesResponseType(typeof(ScResult<string>), 200)]
         [ProducesDefaultResponseType]
-        public ScResult<IEnumerable<UserSpace>> GetSpaces()
+        public async Task<ScResult<string>> GetSpaces()
         {
-            var spaces = TempSpaceData.GetAll();
-            return new ScResult<IEnumerable<UserSpace>>(spaces);
-        }
-
-        // GET api/info/spaces/{id}
-        /// <summary>
-        /// ищет и возвращает пространство по guid
-        /// </summary>
-        /// <param name="id">guid существующего пространства</param>
-        /// <returns>существующее пространство</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="400">Плохие данные клиента</response>
-        [HttpGet("spaces/{id:guid}")]
-        [ProducesResponseType(typeof(UserSpace), 200)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public ScResult<UserSpace> GetSpaceById(Guid id)
-        {
-            var space = TempSpaceData.GetById(id);
-            return new ScResult<UserSpace>(space);
+            using var response = await _httpClient.GetAsync("http://localhost:5093/spaces");
+            return new ScResult<string>(await response.Content.ReadAsStringAsync());
         }
 
         // GET: api/info/users
@@ -87,30 +57,12 @@ namespace EventsApi.Stubs
         /// <returns>список всех пользователей</returns>
         /// <response code="200">Успешное выполнение</response>
         [HttpGet("users")]
-        [ProducesResponseType(typeof(ScResult<IEnumerable<User>>), 200)]
+        [ProducesResponseType(typeof(ScResult<string>), 200)]
         [ProducesDefaultResponseType]
-        public ScResult<IEnumerable<User>> GetUsers()
+        public async Task<ScResult<string>> GetUsers()
         {
-            var users = TempUserData.GetAll();
-            return new ScResult<IEnumerable<User>>(users);
-        }
-
-        // GET api/info/users/{id}
-        /// <summary>
-        /// ищет и возвращает пользователя по guid
-        /// </summary>
-        /// <param name="id">guid существующего пользователя</param>
-        /// <returns>существующий пользователь</returns>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="400">Плохие данные клиента</response>
-        [HttpGet("users/{id:guid}")]
-        [ProducesResponseType(typeof(ScResult<User>), 200)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesDefaultResponseType]
-        public ScResult<User> GetUserById(Guid id)
-        {
-            var user = TempUserData.GetById(id);
-            return new ScResult<User>(user);
+            using var response = await _httpClient.GetAsync("http://localhost:5018/users");
+            return new ScResult<string>(await response.Content.ReadAsStringAsync());
         }
 
     }
