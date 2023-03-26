@@ -81,5 +81,7 @@ namespace EventsApi.MongoDb
             await _eventsCollection.FindOneAndReplaceAsync(filter, eEvent);
             return freeTicket;
         }
+
+
     }
 }
