@@ -9,8 +9,6 @@ using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 
 //mongoDb
@@ -27,6 +25,7 @@ builder.Services.AddSingleton<IEventRepo, MongoDbRepo>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddHttpClient();
 
+
 builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build 
     => build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 builder.Services.AddEndpointsApiExplorer();
@@ -34,6 +33,12 @@ builder.Services.AddSwaggerGen(c =>
 {
     var filePath = Path.Combine(AppContext.BaseDirectory, "EventsApi.xml");
     c.IncludeXmlComments(filePath);
+});
+builder.Services.AddHttpLogging(logging =>
+{
+    logging.MediaTypeOptions.AddText("application/json");
+    logging.RequestBodyLogLimit = 4096;
+    logging.ResponseBodyLogLimit = 4096;
 });
 
 var app = builder.Build();
@@ -54,6 +59,8 @@ if (app.Environment.IsDevelopment())
     app.UseHttpsRedirection();
 
 }
+
+app.UseHttpLogging();
 
 app.UseAuthorization();
 

@@ -77,8 +77,8 @@ namespace EventsApi.Features.Events
         [ProducesDefaultResponseType]
         public async Task<ScResult<Event>> PostEvent([FromBody] Event update)
         {
-            TempImageData.GetById(update.ImageId);
-            TempSpaceData.GetById(update.SpaceId);
+            //TempImageData.GetById(update.ImageId);
+            //TempSpaceData.GetById(update.SpaceId);
             await _validator.ValidateAndThrowAsync(update);
 
             return await _mediator.Send(new CreateEventCommand(update));
@@ -105,8 +105,8 @@ namespace EventsApi.Features.Events
         [ProducesDefaultResponseType]
         public async Task<ScResult<Event>> PutEvent([FromBody] Event update)
         {
-            TempImageData.GetById(update.ImageId);
-            TempSpaceData.GetById(update.SpaceId);
+            //TempImageData.GetById(update.ImageId);
+            //TempSpaceData.GetById(update.SpaceId);
             await _validator.ValidateAndThrowAsync(update);
             return await _mediator.Send(new UpdateEventCommand(update));
         }
