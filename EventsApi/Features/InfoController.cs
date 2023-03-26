@@ -1,11 +1,10 @@
-﻿using EventsApi.Stubs.Images;
-using EventsApi.Stubs.Spaces;
-using EventsApi.Stubs.Users;
+﻿using EventsApi.MongoDb;
+using EventsApi.RabbitMq;
 using Microsoft.AspNetCore.Mvc;
 using SC.Internship.Common.ScResult;
 
 
-namespace EventsApi.Stubs
+namespace EventsApi.Features
 {
     [Produces("application/json")]
     [Route("api/info")]
@@ -13,10 +12,14 @@ namespace EventsApi.Stubs
     public class InfoController : ControllerBase
     {
         private readonly HttpClient _httpClient;
+        private readonly IEventRepo _eventRepo;
+        
 
-        public InfoController(IHttpClientFactory factory)
+        public InfoController(IHttpClientFactory factory, IEventRepo eventRepo)
         {
+            _eventRepo = eventRepo;
             _httpClient = factory.CreateClient();
+            
         }
 
         // GET: api/info/images
@@ -64,6 +67,34 @@ namespace EventsApi.Stubs
             using var response = await _httpClient.GetAsync("http://localhost:5018/users");
             return new ScResult<string>(await response.Content.ReadAsStringAsync());
         }
+
+        ///// <summary>
+        ///// поставить изображение по guid на удаление в очередь
+        ///// </summary>
+        ///// <param name="imageGuid">guid идентификатор изображения</param>
+        //[HttpDelete("delete_image/{imageGuid:guid}")]
+        //public Task DeleteImage(Guid imageGuid)
+        //{
+        //    _imageDeletionSender.SendEvent(imageGuid);
+
+        //    var events = _eventRepo.GetAllEvents().Result.ToList();
+        //    foreach (var e in events.Where(e => e.ImageId == imageGuid))
+        //    {
+        //        e.ImageId = null;
+        //    }
+
+        //    return Task.CompletedTask;
+        //}
+
+        ///// <summary>
+        ///// поставить пространство по guid на удаление в очередь
+        ///// </summary>
+        ///// <param name="spaceGuid">guid идентификатор пространства</param>
+        //[HttpDelete("delete_space/{spaceGuid:guid}")]
+        //public async Task DeleteSpace(Guid spaceGuid)
+        //{
+            
+        //}
 
     }
 }
