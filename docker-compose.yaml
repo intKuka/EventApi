@@ -1,9 +1,21 @@
 version: '3.4'
-services:
-  web:
+services:  
+  events:
     build: .
     ports:
-     - 8080:80
+    - 5211:80
+  images_service:
+    build: ./ImagesService
+    ports:
+    - 5051:80
+  spaces_service:
+    build: ./SpacesService
+    ports:
+    - 5093:80
+  userss_ervice:
+    build: ./UsersService
+    ports:
+    - 5018:80
   identity:       
     image: bizzpo/identityserver4
     environment:

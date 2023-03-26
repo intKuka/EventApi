@@ -19,6 +19,17 @@ docker-compose up --build
 Далее можно использовать либо браузер или Postman для работы с compose, либо swagger через запуск Visual Studio.
 > Важное отличие методов - они работают с разными БД (compose - host:mongodb, swagger - host:localhost)
 
+## Http заглушки
+!!! Перед использование следует запустить соответствующие контейнеры из compose !!!
+
+Список изображений `GET http://localhost:5051/images`
+
+Список пространств `GET http://localhost:5093/spaces`
+
+Список пользователей `GET http://localhost:5018/users`
+
+Swagger также имеет возможность получения этих списков через Info, но результат представлен в качестве строки
+
 ## Работа в Swagger
 При первом запуске будет создана локальная БД по строке `mongodb://localhost:27017`.
 
