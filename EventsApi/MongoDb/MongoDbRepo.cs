@@ -72,8 +72,6 @@ namespace EventsApi.MongoDb
         //обновляет запись билета, меняя guid владельца
         public async Task<Ticket> IssueTicket(Event eEvent, Guid userGuid)
         {
-            var user = TempUserData.GetById(userGuid);
-            if (user == null) throw new ScException("Пользователь не найден");
             var freeTicket = await Task.FromResult(eEvent.TicketList.FirstOrDefault(t => t.Owner == Guid.Empty));
             if (freeTicket == null) throw new ScException("Нет свободных билетов");
             freeTicket.Owner = userGuid;
@@ -81,6 +79,8 @@ namespace EventsApi.MongoDb
             await _eventsCollection.FindOneAndReplaceAsync(filter, eEvent);
             return freeTicket;
         }
+
+        
 
 
     }

@@ -17,8 +17,7 @@ namespace SpacesService
         {
             var factory = new ConnectionFactory
             {
-                Uri = new Uri("amqp://guest:guest@localhost:5672"),
-                ClientProvidedName = "Event RabbitMQ"
+                HostName = "localhost"
             };
             _connection = factory.CreateConnection();
             var channel = _connection.CreateModel();

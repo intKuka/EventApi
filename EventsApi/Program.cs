@@ -26,7 +26,7 @@ builder.Services.AddSingleton<IEventRepo, MongoDbRepo>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddHttpClient();
 builder.Services.AddHostedService<RmqDeletionListener>();
-builder.Services.AddTransient(typeof(EventDeletionSender));
+builder.Services.AddSingleton(typeof(EventDeletionSender));
 
 builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build 
     => build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

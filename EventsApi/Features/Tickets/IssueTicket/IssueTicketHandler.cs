@@ -9,7 +9,6 @@ namespace EventsApi.Features.Tickets.IssueTicket
     public class IssueTicketHandler : IRequestHandler<IssueTicketCommand, ScResult<Ticket>>
     {
         private readonly IEventRepo _eventData;
-
         public IssueTicketHandler(IEventRepo eventData)
         {
             _eventData = eventData;

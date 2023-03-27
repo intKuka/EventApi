@@ -2,7 +2,7 @@
 {
     public class UserData
     {
-        internal static List<User> Users = new()
+        public static List<User> Users = new()
         {
             new User() { Id = new Guid("4bf981b9-fdd5-4854-b438-af792493a221"), Nickname = "USER_1" },
             new User() { Id = new Guid("ae230ee7-a828-42c7-a3aa-9bce48f3fb28"), Nickname = "USER_2" },
@@ -18,7 +18,7 @@
 
         public static bool CheckUser(Guid id)
         {
-            return Users.Any(x => x.Id == id);
+            return Users.Any(user => user.Id == id);
         }
     }
 }
