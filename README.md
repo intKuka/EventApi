@@ -2,6 +2,21 @@
 
 АПИ для создания и редактирования мероприятий
 
+!!! Docker-compose не может полностью функционировать из-за проблем с подключением к RabbitMQ !!!
+
+!!! в compose не работает: events, images_service, spaces_service !!!
+
+!!! как вариант можно построить compose и запустить нерабочие сервисы с VS, либо вовсе все в VS !!!
+
+!!! В настоящий момент разбираюсь что не так !!!
+
+Список сервисов для работы в VS:
+- EventsApi
+- ImagesService
+- SpacesService
+- PaymentService
+- UsersService
+
 ## Начало работы
 1. скопировать репоpиторий и загрузить submodules;
   ```
@@ -11,38 +26,25 @@
   ```
 2. зайти в корневую папку проекта
 
-3. построить docker-compose
+3. построить контейнер RabbitMQ
 ```
-docker-compose up --build
+docker run -d --hostname rmq --name rabbit-server -p 8080:15672 -p 5672:5672 rabbitmq:3-management
 ```
 
-Далее можно использовать либо браузер или Postman для работы с compose, либо swagger через запуск Visual Studio.
-> Важное отличие методов - они работают с разными БД (compose - host:mongodb, swagger - host:localhost)
-
-## Http заглушки
-!!! Перед использование следует запустить соответствующие контейнеры из compose !!!
-
-Список изображений `GET http://localhost:5051/images`
-
-Список пространств `GET http://localhost:5093/spaces`
-
-Список пользователей `GET http://localhost:5018/users`
+Далее нужно либо построить кусок compose `docker-compose up --build` с VS, либо только VS
 
 Swagger также имеет возможность получения этих списков через Info, но результат представлен в качестве строки
 
-## Работа в Swagger
+## Использование
 При первом запуске будет создана локальная БД по строке `mongodb://localhost:27017`.
 
-Есть три контроллера:
-- работа с мероприятиями;
-- информация о билетах;
-- данные заглушек.
+> Некоторые операции требуют свой набор работающих сервисов, т.ч. лучше их сразу все включить
 
 ### Events Controller
 Пример полного пути запроса в Postman для работы с локалльной БД:
 > GET https://localhost:5001/api/events
 или
-> GET http://localhost:5002/api/events
+> GET http://localhost:5211/api/events
 
 `GET api/events` : возвращает все мероприятия из БД
 
@@ -58,51 +60,62 @@ Swagger также имеет возможность получения этих
 Пример полного пути запроса в Postman для работы заглушками:
 > GET https://localhost:5001/api/info/images
 или
-> GET http://localhost:5002/api/info/spaces
+> GET http://localhost:5211/api/info/spaces
 
 `GET api/info/images` : возвращает все изображения
 
-`GET api/info/images{id:guid}` : возвращает изображение по `Guid`
-
 `GET api/info/spaces` : возвращает все пространства
-
-`GET api/info/spaces{id:guid}` : возвращает пространство по `Guid`
 
 `GET api/info/users` : возвращает всех пользователей
 
-`GET api/info/users{id:guid}` : возвращает пользователя по `Guid`
-
 ### Tickets Controller
 Пример полного пути запроса в Postman для работы с БД:
-> GET https://localhost:5001/api/tickets/checkTicket
+> GET https://localhost:5001/api/tickets/check_ticket
 или
-> GET http://localhost:5002/api/tickets/checkTicket
+> GET http://localhost:5211/api/tickets/check_ticket
 
-`PATCH api/tickets/giveTicket` : принимает `Guid мероприятия` и `Guid пользователя`, устанавливает на следующий свободный билет `Guid пользователя`
+`PATCH api/tickets/get_ticket` : принимает `eventId` и `userId`, устанавливает на следующий свободный билет `Guid пользователя`
 
-`GET api/tickets/checkTicket` : принимает `Guid мероприятия` и `Guid пользователя`, выдает список билетов, которыми владеет пользователь в рамках заданного мероприятия
+> Если передаваемое событие имеет цену на билеты более нуля, тогда будет запущен метод симуляции денежных транзакций
 
-`GET api/tickets/checkSeat` : принимает `Guid мероприятия` и `int номер места`, выдает `boolean` о том свободно ли данное место на заданном мероприятии
+`GET api/tickets/check_ticket` : принимает `Guid мероприятия` и `Guid пользователя`, выдает список билетов, которыми владеет пользователь в рамках заданного мероприятия
 
-## Работа в compose
-За исключением сваггера, работа со ссылками остается прежней, но:
-- Порт изменяется на `8080` и доступ запросы отправляются по `http`
+`GET api/tickets/check_seat` : принимает `Guid мероприятия` и `int номер места`, выдает `boolean` о том свободно ли данное место на заданном мероприятии
 
-> К примеру http://localhost:8080/api/events
 
-## Несколько сэмплов
-### Создать мероприятие
-`POST https://localhost:5001/api/events`
+# Http заглушки с данными
+!!! Перед использование следует запустить сервисы !!!
 
-> { "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "starts": "2023-03-20T10:25:39.507Z", "ends": "2023-03-20T15:25:39.507Z", "name": "Event", "description": "Fun event", "imageId": "4c8ebbeb-ffba-4851-8300-ffd192e99372", "spaceId": "169a4f10-0914-4d8d-b922-3958621a72a5", "ticketsQuantity": 3, "hasNumeration": true }
+!!! https не работает на сервисах в compose !!!
 
-### Изменить мероприятие
-`PUT https://localhost:5001/api/events`
+Сервис изображений `http://localhost:5051/images` или `https://localhost:7014/images`
 
-> { "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "starts": "2023-03-20T10:25:39.507Z", "ends": "2023-03-20T15:25:39.507Z", "name": "Event", "description": "not so fun event(", "imageId": "4c8ebbeb-ffba-4851-8300-ffd192e99372", "spaceId": "169a4f10-0914-4d8d-b922-3958621a72a5", "ticketsQuantity": 3, "hasNumeration": false }
+Сервис пространств `http://localhost:5093/spaces` или `https://localhost:7230/images`
 
-### Выдать билет
-`PATCH https://localhost:5001/api/tickets/giveTicket?eventId=3fa85f64-5717-4562-b3fc-2c963f66afa6&userId=4bf981b9-fdd5-4854-b438-af792493a221`
+Сервис пользователей `http://localhost:5018/users` или `https://localhost:7047/images`
 
-### Удалить мероприятие
-`DELETE https://localhost:5001/api/events/3fa85f64-5717-4562-b3fc-2c963f66afa6`
+Сервис транзакций `http://localhost:5234/payment` или `https://localhost:7073/payment`
+
+## Images Service
+Список изображений -- `GET http://localhost:5051/images`
+
+Проверить наличие изображения по Guid -- `GET http://localhost:5051/images/{id:guid}` -- возвращает `Boolean`
+
+Удалить изображение по Guid -- `DELETE http://localhost:5051/images/{id:guid}`
+
+## Spaces Service
+Список пространств -- `GET http://localhost:5093/spaces`
+
+Проверить наличие пространства по Guid -- `GET http://localhost:5093/spaces/{id:guid}` -- возвращает `Boolean`
+
+Удалить изображение по Guid -- `DELETE http://localhost:5093/spaces/{id:guid}`
+
+## Users Service
+Список пользователей -- `GET http://localhost:5018/users`
+
+Проверить наличие пользователя по Guid -- `GET http://localhost:5018/users/{id:guid}` -- возвращает `Boolean`
+
+## Payment Service
+Получить состояние платежа -- `GET http://localhost:5234/payment` -- если платеж ни разу не создавался, тогда в ответе придет болванка
+
+Остальные методы выполняются в процессе операции по покупке билета
