@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton(typeof(ImageData));
-builder.Services.AddTransient(typeof(ImageDeletionSender));
+builder.Services.AddSingleton(typeof(ImageDeletionSender));
 
 var app = builder.Build();
 

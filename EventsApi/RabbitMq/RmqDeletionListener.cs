@@ -25,8 +25,7 @@ namespace EventsApi.RabbitMq
             _eventRepo = eventRepo;
             var factory = new ConnectionFactory
             {
-                Uri = new Uri("amqp://guest:guest@localhost:5672"),
-                ClientProvidedName = "Event RabbitMQ"
+                HostName = "localhost"
             };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();

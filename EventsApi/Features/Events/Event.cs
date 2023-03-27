@@ -16,5 +16,6 @@ namespace EventsApi.Features.Events
         public int TicketsQuantity { get; set; }
         public List<Ticket> TicketList { get; set; } = new();
         public bool HasNumeration { get; set; }
+        public decimal Price { get; set; }
     }
 }

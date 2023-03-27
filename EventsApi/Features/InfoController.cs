@@ -12,14 +12,11 @@ namespace EventsApi.Features
     public class InfoController : ControllerBase
     {
         private readonly HttpClient _httpClient;
-        private readonly IEventRepo _eventRepo;
         
 
-        public InfoController(IHttpClientFactory factory, IEventRepo eventRepo)
+        public InfoController(IHttpClientFactory factory)
         {
-            _eventRepo = eventRepo;
             _httpClient = factory.CreateClient();
-            
         }
 
         // GET: api/info/images

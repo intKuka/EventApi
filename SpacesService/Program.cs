@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton(typeof(SpaceData));
-builder.Services.AddTransient(typeof(SpaceDeletionSender));
+builder.Services.AddSingleton(typeof(SpaceDeletionSender));
 
 
 var app = builder.Build();

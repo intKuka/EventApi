@@ -9,8 +9,7 @@ namespace EventsApi.Features.Tickets
 
         public static async Task<List<Ticket>> CheckUserTicket(Event eEvent, Guid userGuid)
         {
-            var user = TempUserData.GetById(userGuid);
-            return await Task.FromResult(eEvent.TicketList.Where(ticket => ticket.Owner == user.Id).ToList());
+            return await Task.FromResult(eEvent.TicketList.Where(ticket => ticket.Owner == userGuid).ToList());
         }
 
         public static bool CheckSeat(Event eEvent, int seat)
