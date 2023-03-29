@@ -21,12 +21,16 @@
 1. скопировать репоpиторий и загрузить submodules;
   ```
   git clone git@github.com:intKuka/EventApi.git
-  git submodule init
-  git submodule update
   ```
 2. зайти в корневую папку проекта, если необходимо (например, compose)
 
-3. построить контейнер RabbitMQ
+3. загрузить submoudules
+  ```
+  git submodule init
+  git submodule update
+  ```
+
+4. построить контейнер RabbitMQ
 ```
 docker run -d --hostname rmq --name rabbit-server -p 8080:15672 -p 5672:5672 rabbitmq:3-management
 ```
