@@ -10,13 +10,6 @@
 
 !!! В настоящий момент разбираюсь что не так !!!
 
-Список сервисов для работы в VS:
-- EventsApi
-- ImagesService
-- SpacesService
-- PaymentService
-- UsersService
-
 ## Начало работы
 1. скопировать репоpиторий и загрузить submodules;
   ```
@@ -35,9 +28,14 @@
 docker run -d --hostname rmq --name rabbit-server -p 8080:15672 -p 5672:5672 rabbitmq:3-management
 ```
 
-Далее нужно либо построить кусок compose `docker-compose up --build` с VS, либо только VS
+Далее нужно либо построить кусок compose `docker-compose up --build` и запустить недостающие проекты в VS, либо все в VS
 
-Swagger также имеет возможность получения списков данных через Info, но результат представлен в качестве неформатированной строки
+Список сервисов для работы в VS:
+- EventsApi
+- ImagesService
+- SpacesService
+- PaymentService
+- UsersService
 
 ## Использование
 При первом запуске будет создана локальная БД по строке `mongodb://localhost:27017`.
