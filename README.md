@@ -15,7 +15,7 @@
   ```
   git clone git@github.com:intKuka/EventApi.git
   ```
-2. зайти в корневую папку проекта, если необходимо (например, compose)
+2. зайти в корневую папку проекта `cd EventApi`
 
 3. загрузить submoudules
   ```
@@ -28,14 +28,16 @@
 docker run -d --hostname rmq --name rabbit-server -p 8080:15672 -p 5672:5672 rabbitmq:3-management
 ```
 
-Далее нужно либо построить кусок compose `docker-compose up --build` и запустить недостающие проекты в VS, либо все в VS
+5. открыть решение EventsApi. В конфигурации запуска проектов выбрать все интересующие сервисы
 
-Список сервисов для работы в VS:
+Список сервисов для полной работы в VS:
 - EventsApi
 - ImagesService
 - SpacesService
 - PaymentService
 - UsersService
+
+Либо построить кусок compose `docker-compose up --build` и запустить недостающие проекты в VS, либо все в VS
 
 ## Использование
 При первом запуске будет создана локальная БД по строке `mongodb://localhost:27017`.
