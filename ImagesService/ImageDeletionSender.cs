@@ -13,18 +13,26 @@ namespace ImagesService
         private const string RoutingKey = "deletion-routing-key";
         private const string QueueName = "DeletionQueue";
 
-        public ImageDeletionSender()
+        public ImageDeletionSender(IConfiguration config)
         {
             var factory = new ConnectionFactory
             {
-                HostName = "localhost"
+                HostName = config["RabbitMQHost"],
+                Port = int.Parse(config["RabbitMQPort"]!)
             };
-            _connection = factory.CreateConnection();
-            var channel = _connection.CreateModel();
-            channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
-            channel.QueueDeclare(QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-            channel.QueueBind(QueueName, ExchangeName, RoutingKey, null);
-            _channel = channel;
+
+            try
+            {
+                _connection = factory.CreateConnection();
+                _channel = _connection.CreateModel();
+                _channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
+                _channel.QueueDeclare(QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+                _channel.QueueBind(QueueName, ExchangeName, RoutingKey, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"---------------- Connection to RMQ is failed: {ex}");
+            }
         }
 
         public void SendEvent(Guid id)
