@@ -17,8 +17,8 @@ if (app.Environment.IsDevelopment())
 
 var operations = app.Services.GetService<PayData>();
 app.MapGet("/payment", operations!.GetCurrentOperation);
-app.MapGet("/payment/create", operations.CreateOperation);
-app.MapGet("/payment/confirm", operations.ConfirmOperation);
-app.MapGet("/payment/cancel", operations.CancelOperation);
+app.MapPost("/payment/create", operations.CreateOperation);
+app.MapPut("/payment/confirm", operations.ConfirmOperation);
+app.MapPut("/payment/cancel", operations.CancelOperation);
 
 app.Run();

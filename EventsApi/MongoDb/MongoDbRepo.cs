@@ -2,8 +2,6 @@
 using MongoDB.Bson;
 using SC.Internship.Common.Exceptions;
 using EventsApi.Features.Events;
-using EventsApi.Features.Tickets;
-using EventsApi.Stubs.Users;
 
 namespace EventsApi.MongoDb
 {
@@ -23,7 +21,6 @@ namespace EventsApi.MongoDb
 
         public async Task PostEvent(Event newEvent)
         {
-            SetTicketsApplication(newEvent);
             await _eventsCollection.InsertOneAsync(newEvent);
         }
 
@@ -48,40 +45,12 @@ namespace EventsApi.MongoDb
 
         public async Task UpdateEvent(Event update)
         {
-            SetTicketsApplication(update);
             var filter = _filterBuilder.Eq("_id", update.Id);
             var updated = await _eventsCollection.FindOneAndReplaceAsync(filter, update);
             if (updated == null)
             {
                 throw new ScException("Мероприятие не найдено");
             }
-        }  
-
-        //проверяет нужно ли добовлять или оставлять билеты
-        private static void SetTicketsApplication(Event eEvent)
-        {
-            eEvent.TicketList = new List<Ticket>();
-            if (eEvent.TicketsQuantity == 0) return;
-            for (var i = 0; i < eEvent.TicketsQuantity; i++)
-            {
-                eEvent.TicketList.Add(new Ticket());
-                if (eEvent.HasNumeration) eEvent.TicketList[i].Seat = i+1;
-            }
         }
-        
-        //обновляет запись билета, меняя guid владельца
-        public async Task<Ticket> IssueTicket(Event eEvent, Guid userGuid)
-        {
-            var freeTicket = await Task.FromResult(eEvent.TicketList.FirstOrDefault(t => t.Owner == Guid.Empty));
-            if (freeTicket == null) throw new ScException("Нет свободных билетов");
-            freeTicket.Owner = userGuid;
-            var filter = _filterBuilder.Eq("_id", eEvent.Id);
-            await _eventsCollection.FindOneAndReplaceAsync(filter, eEvent);
-            return freeTicket;
-        }
-
-        
-
-
     }
 }
