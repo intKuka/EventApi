@@ -3,15 +3,15 @@ services:
   events:
     build: .
     ports:
-    - 5211:5211
+    - 5211:80
   images_service:
     build: ./ImagesService
     ports:
-    - 5051:5051
+    - 5051:80
   spaces_service:
     build: ./SpacesService
     ports:
-    - 5093:5093
+    - 5093:80
   users_service:
     build: ./UsersService
     ports:
@@ -19,7 +19,7 @@ services:
   payment_service:
     build: ./PaymentService
     ports:
-    - 5234:80
+    - 5234:80  
   identity:       
     image: bizzpo/identityserver4
     environment:

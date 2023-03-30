@@ -20,19 +20,28 @@ namespace EventsApi.RabbitMq
         private const string RoutingKey = "deletion-routing-key";
         private const string QueueName = "DeletionQueue";
 
-        public RmqDeletionListener(IEventRepo eventRepo)
+        public RmqDeletionListener(IEventRepo eventRepo, IConfiguration config)
         {
             _eventRepo = eventRepo;
             var factory = new ConnectionFactory
             {
-                HostName = "localhost"
+                HostName = config["RabbitMQHost"],
+                Port = int.Parse(config["RabbitMQPort"]!)
             };
-            _connection = factory.CreateConnection();
-            _channel = _connection.CreateModel();
-            _channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
-            _channel.QueueDeclare(QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-            _channel.QueueBind(QueueName, ExchangeName, RoutingKey, null);
-            _channel.BasicQos(0, 1, false);
+
+            try
+            {
+                _connection = factory.CreateConnection();
+                _channel = _connection.CreateModel();
+                _channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
+                _channel.QueueDeclare(QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+                _channel.QueueBind(QueueName, ExchangeName, RoutingKey, null);
+                _channel.BasicQos(0, 1, false);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"---------------- Connection to RMQ is failed: {ex}");
+            }
 
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -40,30 +49,36 @@ namespace EventsApi.RabbitMq
             stoppingToken.ThrowIfCancellationRequested();
 
             var consumer = new EventingBasicConsumer(_channel);
-
-            consumer.Received += (sender, args) =>
+            try
             {
-                var body = args.Body.ToArray();
-                var message = Encoding.UTF8.GetString(body);
-                dynamic obj = JObject.Parse(message);
-                if (obj.Type == 1)
+                consumer.Received += (sender, args) =>
                 {
-                    DeleteSpace(new Guid(obj.Id.ToString()));
-                }
-                else if(obj.Type == 2)
-                {
-                    DeleteImage(new Guid(obj.Id.ToString()));
-                }
-                else if (obj.Type == 3)
-                {
-                    var v = obj.Id;
-                    DeleteEvent(new Guid(obj.Id.ToString()));
-                }
+                    var body = args.Body.ToArray();
+                    var message = Encoding.UTF8.GetString(body);
+                    dynamic obj = JObject.Parse(message);
+                    if (obj.Type == 1)
+                    {
+                        DeleteSpace(new Guid(obj.Id.ToString()));
+                    }
+                    else if (obj.Type == 2)
+                    {
+                        DeleteImage(new Guid(obj.Id.ToString()));
+                    }
+                    else if (obj.Type == 3)
+                    {
+                        var v = obj.Id;
+                        DeleteEvent(new Guid(obj.Id.ToString()));
+                    }
 
-                _channel.BasicAck(args.DeliveryTag, false);
-            };
+                    _channel.BasicAck(args.DeliveryTag, false);
+                };
 
-            _channel.BasicConsume(QueueName, false, consumer);
+                _channel.BasicConsume(QueueName, false, consumer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"---------------- Could not handle events: {ex}");
+            }
 
             return Task.CompletedTask;
         }

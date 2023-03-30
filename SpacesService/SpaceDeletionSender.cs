@@ -9,22 +9,30 @@ namespace SpacesService
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
+
         private const string ExchangeName = "DeletionExchange";
         private const string RoutingKey = "deletion-routing-key";
         private const string QueueName = "DeletionQueue";
 
-        public SpaceDeletionSender()
+        public SpaceDeletionSender(IConfiguration config)
         {
             var factory = new ConnectionFactory
             {
-                HostName = "localhost"
+                HostName = config["RabbitMQHost"], 
+                Port = int.Parse(config["RabbitMQPort"]!)
             };
-            _connection = factory.CreateConnection();
-            var channel = _connection.CreateModel();
-            channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
-            channel.QueueDeclare(QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
-            channel.QueueBind(QueueName, ExchangeName, RoutingKey, null);
-            _channel = channel;
+            try
+            {
+                _connection = factory.CreateConnection();
+                _channel = _connection.CreateModel();
+                _channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
+                _channel.QueueDeclare(QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
+                _channel.QueueBind(QueueName, ExchangeName, RoutingKey, null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"---------------- Connection to RMQ is failed: {ex}");
+            }
         }
 
         public void SendEvent(Guid id)
@@ -33,10 +41,18 @@ namespace SpacesService
             var message = JsonSerializer.Serialize(obj);
 
             var messageBodyBytes = Encoding.UTF8.GetBytes(message);
-            _channel.BasicPublish(ExchangeName, RoutingKey, null, messageBodyBytes);
-
-            _channel.Close();
-            _connection.Close();
+            if(_connection.IsOpen)
+            {
+                _channel.BasicPublish(ExchangeName, RoutingKey, null, messageBodyBytes);
+                _channel.Close();
+                _connection.Close();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("No connection to RabbitMQ");
+                Console.ResetColor();
+            }
         }
     }
 }
