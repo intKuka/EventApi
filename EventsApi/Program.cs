@@ -59,7 +59,6 @@ app.UseCors("corsPolicy");
 if (app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
-
 }
 
 app.UseHttpLogging();

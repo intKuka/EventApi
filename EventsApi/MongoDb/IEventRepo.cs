@@ -1,5 +1,4 @@
 ﻿using EventsApi.Features.Events;
-using EventsApi.Features.Tickets;
 
 namespace EventsApi.MongoDb;
 

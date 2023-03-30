@@ -1,5 +1,4 @@
 ﻿using EventsApi.Features.Events;
-using EventsApi.Stubs.Users;
 using SC.Internship.Common.Exceptions;
 
 namespace EventsApi.Features.Tickets

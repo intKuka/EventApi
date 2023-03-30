@@ -4,7 +4,6 @@ using JetBrains.Annotations;
 using MediatR;
 using SC.Internship.Common.Exceptions;
 using SC.Internship.Common.ScResult;
-using System.Net.Http;
 
 namespace EventsApi.Features.Events.UpdateEvent
 {
