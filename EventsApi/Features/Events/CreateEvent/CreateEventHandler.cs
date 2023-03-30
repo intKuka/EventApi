@@ -1,11 +1,8 @@
-﻿using Amazon.Runtime.Internal;
-using EventsApi.Features.Tickets;
+﻿using EventsApi.Features.Tickets;
 using EventsApi.MongoDb;
 using JetBrains.Annotations;
 using MediatR;
 using SC.Internship.Common.ScResult;
-using System.Net.Http;
-using System.Threading;
 using SC.Internship.Common.Exceptions;
 
 namespace EventsApi.Features.Events.CreateEvent

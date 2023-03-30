@@ -1,7 +1,4 @@
-﻿using System.Threading;
-using Microsoft.AspNetCore.Mvc;
-
-namespace PaymentService
+﻿namespace PaymentService
 {
     public class PayData
     {
@@ -17,9 +14,12 @@ namespace PaymentService
             };
         }
 
-        public Task CreateOperation()
+        public Task CreateOperation(string message)
         {
-            _currentOperation = new Payment();
+            _currentOperation = new Payment
+            {
+                Description = message
+            };
             return Task.CompletedTask;
         }
 

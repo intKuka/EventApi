@@ -6,8 +6,6 @@ using EventsApi.Features.Tickets.IssueTicket;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SC.Internship.Common.ScResult;
-using System.Collections.Generic;
-using System.Net.Http;
 
 
 namespace EventsApi.Features.Tickets
@@ -19,7 +17,7 @@ namespace EventsApi.Features.Tickets
     {
         private readonly IMediator _mediator;
 
-        public TicketsController(IMediator mediator, IHttpClientFactory factory)
+        public TicketsController(IMediator mediator)
         {
             _mediator = mediator;
         }

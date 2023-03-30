@@ -1,12 +1,8 @@
-﻿using System;
-using System.Text;
-using EventsApi.Features.Events.DeleteEvent;
+﻿using System.Text;
 using EventsApi.MongoDb;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using ThirdParty.Json.LitJson;
 
 namespace EventsApi.RabbitMq
 {
@@ -51,7 +47,7 @@ namespace EventsApi.RabbitMq
             var consumer = new EventingBasicConsumer(_channel);
             try
             {
-                consumer.Received += (sender, args) =>
+                consumer.Received += (_, args) =>
                 {
                     var body = args.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);

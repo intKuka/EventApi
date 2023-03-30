@@ -32,7 +32,7 @@
             if (image != null)
             {
                 Images.Remove(image);
-                _deletionSender!.SendEvent(id);
+                _deletionSender.SendEvent(id);
                 Console.WriteLine($"Изображение {id} удалено");
 
             }

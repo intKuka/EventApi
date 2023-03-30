@@ -1,6 +1,4 @@
-﻿using ConfigureWebHostBuilder = Microsoft.AspNetCore.Builder.ConfigureWebHostBuilder;
-
-namespace SpacesService
+﻿namespace SpacesService
 {
     public class SpaceData
     {
@@ -34,7 +32,7 @@ namespace SpacesService
             if (space != null)
             {
                 Spaces.Remove(space);
-                _deletionSender!.SendEvent(id);
+                _deletionSender.SendEvent(id);
                 Console.WriteLine($"Пространство {id} удалено");
             }
             else Console.WriteLine($"Пространство {id} не найдено");
