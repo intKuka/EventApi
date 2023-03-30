@@ -16,6 +16,7 @@ namespace EventsApi.Features.Events
                 .MaximumLength(100).WithMessage("Имя не может быть более 100 символов");
             RuleFor(e => e.Description).MaximumLength(200).WithMessage("Описание не должно превышать 200 символов");
             RuleFor(e => e.TicketsQuantity).GreaterThanOrEqualTo(0).WithMessage("Количество билетов не может быть отрицательным");
+            RuleFor(e => e.Price).GreaterThanOrEqualTo(0).WithMessage("Цена не может быть меньше нуля");
 
 
         }

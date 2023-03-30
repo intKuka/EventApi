@@ -12,8 +12,8 @@ namespace EventsApi.RabbitMq
 {
     public class RmqDeletionListener : BackgroundService
     {
-        private readonly IConnection _connection;
-        private readonly IModel _channel;
+        private readonly IConnection _connection = null!;
+        private readonly IModel _channel = null!;
         private readonly IEventRepo _eventRepo;
 
         private const string ExchangeName = "DeletionExchange";
@@ -66,7 +66,6 @@ namespace EventsApi.RabbitMq
                     }
                     else if (obj.Type == 3)
                     {
-                        var v = obj.Id;
                         DeleteEvent(new Guid(obj.Id.ToString()));
                     }
 
@@ -78,6 +77,7 @@ namespace EventsApi.RabbitMq
             catch (Exception ex)
             {
                 Console.WriteLine($"---------------- Could not handle events: {ex}");
+                throw;
             }
 
             return Task.CompletedTask;
