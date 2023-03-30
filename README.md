@@ -44,8 +44,6 @@ docker-compose up --build
 - UsersService
 
 ## Использование
-При первом запуске будет создана локальная БД по строке `mongodb://localhost:27017`.
-
 ### Events Controller
 Пример полного пути запроса в Postman для работы с локалльной БД:
 > GET https://localhost:5001/api/events
