@@ -73,12 +73,9 @@ namespace EventsApi.Features.Events
         [ProducesResponseType(typeof(ScResult<Event>), 201)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<Event>> PostEvent([FromBody] Event update)
+        public async Task<ScResult<Event>> CreateEvent([FromBody] Event update)
         {
-            //TempImageData.GetById(update.ImageId);
-            //TempSpaceData.GetById(update.SpaceId);
             await _validator.ValidateAndThrowAsync(update);
-
             return await _mediator.Send(new CreateEventCommand(update));
         }
 
@@ -101,10 +98,8 @@ namespace EventsApi.Features.Events
         [ProducesResponseType(typeof(ScResult<Event>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<ScResult<Event>> PutEvent([FromBody] Event update)
+        public async Task<ScResult<Event>> UpdateEvent([FromBody] Event update)
         {
-            //TempImageData.GetById(update.ImageId);
-            //TempSpaceData.GetById(update.SpaceId);
             await _validator.ValidateAndThrowAsync(update);
             return await _mediator.Send(new UpdateEventCommand(update));
         }

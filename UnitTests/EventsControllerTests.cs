@@ -55,7 +55,7 @@ namespace UnitTests
                 .ReturnsAsync(new ScResult<Event>(eEvent));
 
             // Act
-            var actual = await _eventsController.PostEvent(eEvent);
+            var actual = await _eventsController.CreateEvent(eEvent);
 
             // Assert
             Assert.That(actual.Result, Is.EqualTo(expected.Result));
@@ -83,7 +83,7 @@ namespace UnitTests
             Exception actual = new();
             try
             {
-                await _eventsController.PostEvent(eEvent);
+                await _eventsController.CreateEvent(eEvent);
             }
             catch (Exception e)
             {

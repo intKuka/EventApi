@@ -22,7 +22,7 @@ namespace EventsApi.Features.Events.CreateEvent
         {
             await IsValidImageAndSpace(request.NewEvent.ImageId, request.NewEvent.SpaceId);
             TicketsData.TryTicketsApplication(request.NewEvent);
-            await _eventData.PostEvent(request.NewEvent);
+            await _eventData.CreateEvent(request.NewEvent);
             return new ScResult<Event>(request.NewEvent);
         }
 

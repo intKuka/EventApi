@@ -9,7 +9,7 @@ namespace EventsApi.RabbitMq
     public class RmqDeletionListener : BackgroundService
     {
         private readonly IConnection _connection = null!;
-        private readonly IModel _channel = null!;
+        private readonly IModel? _channel;
         private readonly IEventRepo _eventRepo;
 
         private const string ExchangeName = "DeletionExchange";
@@ -65,15 +65,14 @@ namespace EventsApi.RabbitMq
                         DeleteEvent(new Guid(obj.Id.ToString()));
                     }
 
-                    _channel.BasicAck(args.DeliveryTag, false);
+                    _channel?.BasicAck(args.DeliveryTag, false);
                 };
 
-                _channel.BasicConsume(QueueName, false, consumer);
+                _channel?.BasicConsume(QueueName, false, consumer);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"---------------- Could not handle events: {ex}");
-                throw;
             }
 
             return Task.CompletedTask;
@@ -81,7 +80,7 @@ namespace EventsApi.RabbitMq
         
         public override void Dispose()
         {
-            _channel.Close();
+            _channel?.Close();
             _connection.Close();
             base.Dispose();
         }

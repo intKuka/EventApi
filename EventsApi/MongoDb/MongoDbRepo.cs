@@ -19,7 +19,7 @@ namespace EventsApi.MongoDb
             _eventsCollection = db.GetCollection<Event>(CollectionName);
         }
 
-        public async Task PostEvent(Event newEvent)
+        public async Task CreateEvent(Event newEvent)
         {
             await _eventsCollection.InsertOneAsync(newEvent);
         }

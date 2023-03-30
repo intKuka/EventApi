@@ -6,8 +6,8 @@ namespace EventsApi.RabbitMq
 {
     public class EventDeletionSender
     {
-        private readonly IConnection _connection = null!;
-        private readonly IModel _channel = null!;
+        private readonly IConnection? _connection;
+        private readonly IModel? _channel;
 
         private const string ExchangeName = "DeletionExchange";
         private const string RoutingKey = "deletion-routing-key";
@@ -40,10 +40,10 @@ namespace EventsApi.RabbitMq
             var message = JsonSerializer.Serialize(obj);
 
             var messageBodyBytes = Encoding.UTF8.GetBytes(message);
-            _channel.BasicPublish(ExchangeName, RoutingKey, null, messageBodyBytes);
+            _channel?.BasicPublish(ExchangeName, RoutingKey, null, messageBodyBytes);
 
-            _channel.Close();
-            _connection.Close();
+            _channel?.Close();
+            _connection?.Close();
         }
     }
 }
