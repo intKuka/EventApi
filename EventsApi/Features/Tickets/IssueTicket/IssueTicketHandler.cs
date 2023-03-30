@@ -1,7 +1,11 @@
-﻿using EventsApi.MongoDb;
+﻿using EventsApi.Features.Events;
+using EventsApi.MongoDb;
 using JetBrains.Annotations;
 using MediatR;
+using SC.Internship.Common.Exceptions;
 using SC.Internship.Common.ScResult;
+using System.Net.Http;
+using static IdentityModel.OidcConstants;
 
 namespace EventsApi.Features.Tickets.IssueTicket
 {

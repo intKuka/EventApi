@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using MediatR;
 using SC.Internship.Common.ScResult;
+using System.Net.Http;
 
 namespace EventsApi.Features.Tickets.CheckUserTicket
 {

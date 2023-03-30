@@ -1,5 +1,6 @@
 ﻿using EventsApi.MongoDb;
 using MediatR;
+using SC.Internship.Common.Exceptions;
 using SC.Internship.Common.ScResult;
 using JetBrains.Annotations;
 
@@ -25,9 +26,12 @@ namespace EventsApi.Features.Tickets.BuyTicket
                     return new ScResult<Ticket>(new ScError() { Message = $"Пользователь {request.UserGuid} не найден" });
             }
 
-            using (await _httpClient.PostAsync("http://localhost:5234/payment/create", null, cancellationToken))
+            try
             {
-            }
+                var ticket = await _eventData.IssueTicket(request.Event, request.UserGuid);
+                using (await _httpClient.GetAsync("http://localhost:5234/payment/confirm", cancellationToken))
+                {
+                }
 
             try
             {
