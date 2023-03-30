@@ -1,5 +1,4 @@
 ﻿using EventsApi.Features.Events;
-using EventsApi.Features.Tickets;
 
 namespace EventsApi.MongoDb;
 
@@ -10,5 +9,4 @@ public interface IEventRepo
     Task<IEnumerable<Event>> GetAllEvents();
     Task<Event> GetEventById(Guid id);
     Task UpdateEvent(Event update);
-    Task<Ticket> IssueTicket(Event eEvent, Guid userGuid);
 }

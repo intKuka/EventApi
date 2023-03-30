@@ -6,8 +6,6 @@ using EventsApi.Features.Tickets.IssueTicket;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SC.Internship.Common.ScResult;
-using System.Collections.Generic;
-using System.Net.Http;
 
 
 namespace EventsApi.Features.Tickets
@@ -18,12 +16,10 @@ namespace EventsApi.Features.Tickets
     public class TicketsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly HttpClient _httpClient;
 
-        public TicketsController(IMediator mediator, IHttpClientFactory factory)
+        public TicketsController(IMediator mediator)
         {
             _mediator = mediator;
-            _httpClient = factory.CreateClient();
         }
 
         // PATCH api/tickets/get_ticket
@@ -41,14 +37,6 @@ namespace EventsApi.Features.Tickets
         [ProducesDefaultResponseType]
         public async Task<ScResult<Ticket>> IssueTicket([FromQuery] Guid eventId, [FromQuery] Guid userId)
         {
-            using (var response = await _httpClient.GetAsync($"http://localhost:5018/users/{userId}"))
-            {
-                if (response.Content.ReadAsStringAsync().Result == "false")
-                {
-                    
-                    return new ScResult<Ticket>(new ScError(){ Message = $"Пользователь {userId} не найден"});
-                }
-            }
             var existingEvent = await _mediator.Send(new GetEventByIdQuery(eventId));
             if (existingEvent.Result!.Price > 0)
             {
@@ -72,13 +60,6 @@ namespace EventsApi.Features.Tickets
         [ProducesDefaultResponseType]
         public async Task<ScResult<IEnumerable<Ticket>>> CheckUserTicket([FromQuery] Guid eventId, [FromQuery] Guid userId)
         {
-            using (var response = await _httpClient.GetAsync($"http://localhost:5018/users/{userId}"))
-            {
-                if (response.Content.ReadAsStringAsync().Result == "false")
-                {
-                    return new ScResult<IEnumerable<Ticket>> (new ScError() { Message = $"Пользователь {userId} не найден" });
-                }
-            }
             var existingEvent = await _mediator.Send(new GetEventByIdQuery(eventId));
             return await _mediator.Send(new CheckUserTicketQuery(existingEvent.Result!, userId));
         }
@@ -89,7 +70,9 @@ namespace EventsApi.Features.Tickets
         /// </summary>
         /// <param name="eventId"></param>
         /// <param name="seat"></param>
-        /// <returns></returns>
+        /// <returns>логическое значение свободно ли место</returns>
+        /// <response code="200">Успешное выполнение</response>
+        /// <response code="400">Плохие данные клиента</response>
         [HttpGet("check_seat")]
         [ProducesResponseType(typeof(ScResult<bool>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

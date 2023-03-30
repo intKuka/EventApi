@@ -1,19 +1,15 @@
-﻿using System;
-using System.Text;
-using EventsApi.Features.Events.DeleteEvent;
+﻿using System.Text;
 using EventsApi.MongoDb;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using ThirdParty.Json.LitJson;
 
 namespace EventsApi.RabbitMq
 {
     public class RmqDeletionListener : BackgroundService
     {
-        private readonly IConnection _connection;
-        private readonly IModel _channel;
+        private readonly IConnection _connection = null!;
+        private readonly IModel _channel = null!;
         private readonly IEventRepo _eventRepo;
 
         private const string ExchangeName = "DeletionExchange";
@@ -51,7 +47,7 @@ namespace EventsApi.RabbitMq
             var consumer = new EventingBasicConsumer(_channel);
             try
             {
-                consumer.Received += (sender, args) =>
+                consumer.Received += (_, args) =>
                 {
                     var body = args.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
@@ -66,7 +62,6 @@ namespace EventsApi.RabbitMq
                     }
                     else if (obj.Type == 3)
                     {
-                        var v = obj.Id;
                         DeleteEvent(new Guid(obj.Id.ToString()));
                     }
 
@@ -78,6 +73,7 @@ namespace EventsApi.RabbitMq
             catch (Exception ex)
             {
                 Console.WriteLine($"---------------- Could not handle events: {ex}");
+                throw;
             }
 
             return Task.CompletedTask;

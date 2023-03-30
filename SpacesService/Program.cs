@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Builder;
 using SpacesService;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -6,8 +6,8 @@ namespace SpacesService
 {
     public class SpaceDeletionSender
     {
-        private readonly IConnection _connection;
-        private readonly IModel _channel;
+        private readonly IConnection _connection = null!;
+        private readonly IModel _channel = null!;
 
 
         private const string ExchangeName = "DeletionExchange";

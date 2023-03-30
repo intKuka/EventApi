@@ -6,8 +6,8 @@ namespace ImagesService
 {
     public class ImageDeletionSender
     {
-        private readonly IConnection _connection;
-        private readonly IModel _channel;
+        private readonly IConnection _connection = null!;
+        private readonly IModel _channel = null!;
 
         private const string ExchangeName = "DeletionExchange";
         private const string RoutingKey = "deletion-routing-key";
