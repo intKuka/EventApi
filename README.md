@@ -90,9 +90,9 @@ docker-compose up --build
 # Http заглушки с данными
 Сервис изображений `http://localhost:5051/images` или `https://localhost:7014/images`
 
-Сервис пространств `http://localhost:5093/spaces` или `https://localhost:7230/images`
+Сервис пространств `http://localhost:5093/spaces` или `https://localhost:7230/spaces`
 
-Сервис пользователей `http://localhost:5018/users` или `https://localhost:7047/images`
+Сервис пользователей `http://localhost:5018/users` или `https://localhost:7047/users`
 
 Сервис транзакций `http://localhost:5234/payment` или `https://localhost:7073/payment`
 
