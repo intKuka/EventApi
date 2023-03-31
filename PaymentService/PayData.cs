@@ -14,7 +14,7 @@
             };
         }
 
-        public Task CreateOperation(string message)
+        public Task CreateOperation(string message = "")
         {
             _currentOperation = new Payment
             {

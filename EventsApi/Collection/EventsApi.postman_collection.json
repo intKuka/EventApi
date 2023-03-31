@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "61ef0c89-5c2c-4c24-ac8b-ea8b29bdc895",
+		"name": "EventsApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26442683"
+	},
+	"item": [
+		{
+			"name": "Get Events List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5211/api/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5211",
+					"path": [
+						"api",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Images List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5051/images",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5051",
+					"path": [
+						"images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Spaces List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5093/spaces",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5093",
+					"path": [
+						"spaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5018/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5018",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"starts\": \"2023-03-31T08:38:23.791Z\",\r\n  \"ends\": \"2023-05-31T08:38:23.791Z\",\r\n  \"name\": \"string\",\r\n  \"description\": \"string\",\r\n  \"imageId\": \"4c8ebbeb-ffba-4851-8300-ffd192e99372\",\r\n  \"spaceId\": \"169a4f10-0914-4d8d-b922-3958621a72a5\",\r\n  \"ticketsQuantity\": 3,\r\n  \"hasNumeration\": true,\r\n  \"price\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5211/api/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5211",
+					"path": [
+						"api",
+						"events"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"starts\": \"2023-03-31T08:38:23.791Z\",\r\n    \"ends\": \"2023-06-15T08:38:23.791Z\",\r\n    \"name\": \"name\",\r\n    \"spaceId\": \"c14a6de5-fcdd-4ca6-aec8-2ff75a7cc2e1\",\r\n    \"ticketsQuantity\": 3,\r\n    \"hasNumeration\": false,\r\n    \"price\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5211/api/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5211",
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 31 Mar 2023 10:08:27 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"result\": {\n        \"id\": \"759be639-4b16-42b7-9185-a271cd2e065f\",\n        \"starts\": \"2023-03-31T08:38:23.791Z\",\n        \"ends\": \"2023-06-15T08:38:23.791Z\",\n        \"name\": \"name\",\n        \"description\": null,\n        \"imageId\": null,\n        \"spaceId\": \"c14a6de5-fcdd-4ca6-aec8-2ff75a7cc2e1\",\n        \"ticketsQuantity\": 3,\n        \"ticketList\": [\n            {\n                \"id\": \"83bcd16b-ad43-4fdf-af7d-ea57b7ae9517\",\n                \"owner\": \"00000000-0000-0000-0000-000000000000\",\n                \"seat\": null\n            },\n            {\n                \"id\": \"9b3d5b9f-98b4-4b8d-ad28-174f0ceca197\",\n                \"owner\": \"00000000-0000-0000-0000-000000000000\",\n                \"seat\": null\n            },\n            {\n                \"id\": \"74a03e08-38e4-4a6e-a75a-cc3c06aa3d92\",\n                \"owner\": \"00000000-0000-0000-0000-000000000000\",\n                \"seat\": null\n            }\n        ],\n        \"hasNumeration\": false,\n        \"price\": 20\n    },\n    \"error\": null\n}"
+				},
+				{
+					"name": "Validation Failures",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"starts\": \"2023-03-31T08:38:23.791Z\",\r\n    \"ends\": \"2022-06-15T08:38:23.791Z\",\r\n    \"name\": \"\",\r\n    \"spaceId\": \"c14a6de5-fcdd-4ca6-aec8-2ff75a7cc2e1\",\r\n    \"ticketsQuantity\": -1,\r\n    \"hasNumeration\": false,\r\n    \"price\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5211/api/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5211",
+							"path": [
+								"api",
+								"events"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 31 Mar 2023 10:09:11 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"Error\": {\n        \"Message\": \"Имееются некорректные данные\",\n        \"ModelState\": {\n            \"NewEvent.Ends\": [\n                \"Дата окончания должна быть позже даты начала\"\n            ],\n            \"NewEvent.Name\": [\n                \"Имя не должно быть пустым\"\n            ],\n            \"NewEvent.TicketsQuantity\": [\n                \"Количество билетов не может быть отрицательным\"\n            ],\n            \"NewEvent.Price\": [\n                \"Цена не может быть меньше нуля\"\n            ]\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Event",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"id\": \"c0b4f0c6-9195-4771-b30e-154b53de0574\",\r\n            \"starts\": \"2023-03-31T08:38:23.791Z\",\r\n            \"ends\": \"2023-05-31T08:38:23.791Z\",\r\n            \"name\": \"name\",\r\n            \"spaceId\": \"169a4f10-0914-4d8d-b922-3958621a72a5\",\r\n            \"ticketsQuantity\": 1,            \r\n            \"hasNumeration\": false,\r\n            \"price\": 0\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5211/api/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5211",
+					"path": [
+						"api",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Event",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5211/api/events/c0b4f0c6-9195-4771-b30e-154b53de0574",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5211",
+					"path": [
+						"api",
+						"events",
+						"c0b4f0c6-9195-4771-b30e-154b53de0574"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ticket For User",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5211/api/tickets?eventId=395069eb-ec0e-46ab-9cc3-396e26aa7c50&userId=4bf981b9-fdd5-4854-b438-af792493a221",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5211",
+					"path": [
+						"api",
+						"tickets"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "395069eb-ec0e-46ab-9cc3-396e26aa7c50"
+						},
+						{
+							"key": "userId",
+							"value": "4bf981b9-fdd5-4854-b438-af792493a221"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Tickets List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5211/api/tickets/list?eventId=395069eb-ec0e-46ab-9cc3-396e26aa7c50&userId=4bf981b9-fdd5-4854-b438-af792493a221",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5211",
+					"path": [
+						"api",
+						"tickets",
+						"list"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "395069eb-ec0e-46ab-9cc3-396e26aa7c50"
+						},
+						{
+							"key": "userId",
+							"value": "4bf981b9-fdd5-4854-b438-af792493a221"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Ticket Seat Availability",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5211/api/tickets?eventId=395069eb-ec0e-46ab-9cc3-396e26aa7c50&seat=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5211",
+					"path": [
+						"api",
+						"tickets"
+					],
+					"query": [
+						{
+							"key": "eventId",
+							"value": "395069eb-ec0e-46ab-9cc3-396e26aa7c50"
+						},
+						{
+							"key": "seat",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Image Existence",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5051/images/4c8ebbeb-ffba-4851-8300-ffd192e99372",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5051",
+					"path": [
+						"images",
+						"4c8ebbeb-ffba-4851-8300-ffd192e99372"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Image",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5051/images/4c8ebbeb-ffba-4851-8300-ffd192e99372",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5051",
+					"path": [
+						"images",
+						"4c8ebbeb-ffba-4851-8300-ffd192e99372"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Space Existence",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5093/spaces/169a4f10-0914-4d8d-b922-3958621a72a5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5093",
+					"path": [
+						"spaces",
+						"169a4f10-0914-4d8d-b922-3958621a72a5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Space",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5093/spaces/169a4f10-0914-4d8d-b922-3958621a72a5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5093",
+					"path": [
+						"spaces",
+						"169a4f10-0914-4d8d-b922-3958621a72a5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5234/payment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5234",
+					"path": [
+						"payment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

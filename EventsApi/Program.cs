@@ -1,13 +1,16 @@
-using EventsApi.Features.Events;
+using EventsApi.Behaviors;
 using EventsApi.Middleware;
 using EventsApi.MongoDb;
 using EventsApi.Policies;
 using EventsApi.RabbitMq;
-using FluentValidation;
+using MediatR;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using FluentValidation;
+using EventsApi.Features.Events.CreateEvent;
+using EventsApi.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,12 +25,19 @@ builder.Services.AddSingleton<IMongoClient>(_ =>
 });
 
 //key dependencies
-builder.Services.AddScoped<IValidator<Event>, EventValidator>();
-builder.Services.AddSingleton<IEventRepo, MongoDbRepo>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddValidatorsFromAssemblyContaining<CreateEventCommandValidator>();
+builder.Services.AddSingleton<IEventRepo, MongoDbRepo>();
 builder.Services.AddHttpClient(Global.EventClient).AddPolicyHandler(HttpClientPolicy.GetExponentialRetryPolicy());
 builder.Services.AddHostedService<RmqDeletionListener>();
-builder.Services.AddSingleton(typeof(EventDeletionSender));
+builder.Services.AddTransient(typeof(EventDeletionSender));
+
+var v = builder.Configuration.GetSection(nameof(ServicesUris));
+var b = v.Value;
+builder.Services.Configure<ServicesUris>(builder.Configuration
+    .GetSection(nameof(ServicesUris)));
+builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection(nameof(RabbitMqSettings)));
 
 builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build 
     => build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

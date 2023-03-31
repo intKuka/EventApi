@@ -67,31 +67,19 @@ docker-compose up --build
 
 `DELETE api/events{id:guid}` : удаляет объект из БД по его `Guid`
 
-### Info Controller
-Пример полного пути запроса в Postman для работы заглушками:
-> GET https://localhost:5001/api/info/images
-или
-> GET http://localhost:5211/api/info/spaces
-
-`GET api/info/images` : возвращает все изображения
-
-`GET api/info/spaces` : возвращает все пространства
-
-`GET api/info/users` : возвращает всех пользователей
-
 ### Tickets Controller
-Пример полного пути запроса в Postman для работы с БД:
-> GET https://localhost:5001/api/tickets/check_ticket
+Пример корневого пути запроса в Postman для работы с БД:
+> GET https://localhost:5001/api/tickets...
 или
-> GET http://localhost:5211/api/tickets/check_ticket
+> GET http://localhost:5211/api/tickets...
 
-`PATCH api/tickets/get_ticket` : принимает `eventId` и `userId`, устанавливает на следующий свободный билет `Guid пользователя`
+`PATCH api/tickets?eventId={eventId:guid}&userId={userId:guid}` : принимает `Guid мероприятия` и `Guid пользователя`, устанавливает на следующий свободный билет `Guid пользователя`
 
 > Если передаваемое событие имеет цену на билеты более нуля, тогда будет запущен метод симуляции денежных транзакций
 
-`GET api/tickets/check_ticket` : принимает `Guid мероприятия` и `Guid пользователя`, выдает список билетов, которыми владеет пользователь в рамках заданного мероприятия
+`GET api/tickets/list?eventId={eventId:guid}&userId={userId:guid}` : принимает `Guid мероприятия` и `Guid пользователя`, выдает список билетов, которыми владеет пользователь в рамках заданного мероприятия
 
-`GET api/tickets/check_seat` : принимает `Guid мероприятия` и `int номер места`, выдает `boolean` о том свободно ли данное место на заданном мероприятии
+`GET api/tickets?eventId={eventId:guid}&seat={seat:int}` : принимает `Guid мероприятия` и `int номер места`, выдает `boolean` о том свободно ли данное место на заданном мероприятии
 
 
 # Http заглушки с данными
@@ -127,7 +115,7 @@ docker-compose up --build
 
 Остальные методы выполняются в процессе операции по покупке билета
 
-# Примеры
+# Дополнительно
 ## Минимальные данные для создания мероприятия
 ```
 {

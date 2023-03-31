@@ -22,7 +22,7 @@ namespace EventsApi.Features.Tickets
             _mediator = mediator;
         }
 
-        // PATCH api/tickets/get_ticket
+        // PATCH api/tickets?eventId={eventId:guid}&userId={userId:guid}
         /// <summary>
         /// вручить билет пользователю на определенное мероприятие
         /// </summary>
@@ -31,7 +31,7 @@ namespace EventsApi.Features.Tickets
         /// <returns>билет, полученный указанным пользователем</returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Плохие данные клиента</response>
-        [HttpPatch("get_ticket")]
+        [HttpPatch]
         [ProducesResponseType(typeof(ScResult<Ticket>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -45,7 +45,7 @@ namespace EventsApi.Features.Tickets
             return await _mediator.Send(new IssueTicketCommand(existingEvent.Result!, userId));
         }
 
-        // GET api/tickets/check_ticket
+        // GET api/tickets/list?eventId={eventId:guid}&userId={userId:guid}
         /// <summary>
         /// список билетов пользователя на конкретное мероприятие
         /// </summary>
@@ -54,7 +54,7 @@ namespace EventsApi.Features.Tickets
         /// <returns>список билетов, которыми владеет пользователь в рамках указанноко события</returns> 
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Плохие данные клиента</response>
-        [HttpGet("check_ticket")]
+        [HttpGet("list")]
         [ProducesResponseType(typeof(ScResult<Ticket>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -64,7 +64,7 @@ namespace EventsApi.Features.Tickets
             return await _mediator.Send(new CheckUserTicketQuery(existingEvent.Result!, userId));
         }
 
-        // GET api/tickets/check_seat
+        // GET api/tickets?eventId={eventId:guid}&seat={seat:int}
         /// <summary>
         /// проверяет свободно ли указанное места на мероприятии
         /// </summary>
@@ -73,7 +73,7 @@ namespace EventsApi.Features.Tickets
         /// <returns>логическое значение свободно ли место</returns>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="400">Плохие данные клиента</response>
-        [HttpGet("check_seat")]
+        [HttpGet]
         [ProducesResponseType(typeof(ScResult<bool>), 200)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
