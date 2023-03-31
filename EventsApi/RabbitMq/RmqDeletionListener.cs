@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using EventsApi.MongoDb;
+using EventsApi.Settings;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -8,7 +10,7 @@ namespace EventsApi.RabbitMq
 {
     public class RmqDeletionListener : BackgroundService
     {
-        private readonly IConnection _connection = null!;
+        private readonly IConnection? _connection;
         private readonly IModel? _channel;
         private readonly IEventRepo _eventRepo;
 
@@ -16,13 +18,13 @@ namespace EventsApi.RabbitMq
         private const string RoutingKey = "deletion-routing-key";
         private const string QueueName = "DeletionQueue";
 
-        public RmqDeletionListener(IEventRepo eventRepo, IConfiguration config)
+        public RmqDeletionListener(IEventRepo eventRepo, IOptions<RabbitMqSettings> settings)
         {
             _eventRepo = eventRepo;
             var factory = new ConnectionFactory
             {
-                HostName = config["RabbitMQHost"],
-                Port = int.Parse(config["RabbitMQPort"]!)
+                HostName = settings.Value.Host,
+                Port = settings.Value.Port
             };
 
             try
@@ -81,7 +83,7 @@ namespace EventsApi.RabbitMq
         public override void Dispose()
         {
             _channel?.Close();
-            _connection.Close();
+            _connection?.Close();
             base.Dispose();
         }
         private void DeleteSpace(Guid id)

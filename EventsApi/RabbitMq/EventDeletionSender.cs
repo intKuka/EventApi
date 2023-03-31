@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
+using EventsApi.Settings;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
 namespace EventsApi.RabbitMq
@@ -13,12 +15,12 @@ namespace EventsApi.RabbitMq
         private const string RoutingKey = "deletion-routing-key";
         private const string QueueName = "DeletionQueue";
 
-        public EventDeletionSender(IConfiguration config)
+        public EventDeletionSender(IOptions<RabbitMqSettings> settings)
         {
             var factory = new ConnectionFactory
             {
-                HostName = config["RabbitMQHost"],
-                Port = int.Parse(config["RabbitMQPort"]!)
+                HostName = settings.Value.Host,
+                Port = settings.Value.Port
             };
             try
             {
