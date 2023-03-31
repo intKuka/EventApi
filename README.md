@@ -55,6 +55,8 @@ docker-compose up --build
 - UsersService
 
 ## Использование
+В EventsApi/Collection содержиться файл с примерами запросов для АПИ
+
 ### Events Controller
 Пример полного пути запроса в Postman для работы с локалльной БД:
 > GET https://localhost:5001/api/events
