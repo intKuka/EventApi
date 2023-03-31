@@ -17,11 +17,10 @@ namespace EventsApi.Features.Events
     public class EventsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IValidator<Event> _validator;
-        public EventsController(IMediator mediator, IValidator<Event> validator)
+
+        public EventsController(IMediator mediator)
         {
             _mediator = mediator;
-            _validator = validator;
         }
 
 
@@ -75,7 +74,6 @@ namespace EventsApi.Features.Events
         [ProducesDefaultResponseType]
         public async Task<ScResult<Event>> CreateEvent([FromBody] Event update)
         {
-            await _validator.ValidateAndThrowAsync(update);
             return await _mediator.Send(new CreateEventCommand(update));
         }
 
@@ -100,7 +98,6 @@ namespace EventsApi.Features.Events
         [ProducesDefaultResponseType]
         public async Task<ScResult<Event>> UpdateEvent([FromBody] Event update)
         {
-            await _validator.ValidateAndThrowAsync(update);
             return await _mediator.Send(new UpdateEventCommand(update));
         }
 

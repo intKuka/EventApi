@@ -8,7 +8,7 @@ using SC.Internship.Common.ScResult;
 namespace EventsApi.Features.Events.UpdateEvent
 {
     [UsedImplicitly]
-    public class UpdateEventHandler : IRequestHandler<UpdateEventCommand, ScResult<Event>>
+    public class UpdateEventHandler : ICommandHandler<UpdateEventCommand, ScResult<Event>>
     {
         private readonly IEventRepo _eventData;
         private readonly IHttpClientFactory _factory;

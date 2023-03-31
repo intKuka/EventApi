@@ -1,14 +1,13 @@
 ﻿using EventsApi.Features.Tickets;
 using EventsApi.MongoDb;
 using JetBrains.Annotations;
-using MediatR;
 using SC.Internship.Common.ScResult;
 using SC.Internship.Common.Exceptions;
 
 namespace EventsApi.Features.Events.CreateEvent
 {
     [UsedImplicitly]
-    public class CreateEventHandler : IRequestHandler<CreateEventCommand, ScResult<Event>>
+    public class CreateEventHandler : ICommandHandler<CreateEventCommand, ScResult<Event>>
     {
         private readonly IEventRepo _eventData;
         private readonly IHttpClientFactory _factory;
@@ -20,6 +19,7 @@ namespace EventsApi.Features.Events.CreateEvent
 
         public async Task<ScResult<Event>> Handle(CreateEventCommand request, CancellationToken cancellationToken)
         {
+            request.NewEvent.Id = Guid.NewGuid();
             await IsValidImageAndSpace(request.NewEvent.ImageId, request.NewEvent.SpaceId);
             TicketsData.TryTicketsApplication(request.NewEvent);
             await _eventData.CreateEvent(request.NewEvent);
