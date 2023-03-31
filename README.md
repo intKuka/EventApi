@@ -10,7 +10,9 @@
   ```
   git clone git@github.com:intKuka/EventApi.git
   ```
-2. зайти в корневую папку проекта ```cd EventApi```
+2. зайти в корневую папку проекта 
+
+  ```cd EventApi```
 
 3. загрузить submoudules
   ```
