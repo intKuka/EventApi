@@ -6,7 +6,7 @@
 Адреса при работе через docker compose работают только по HTTP
 
 ## Начало работы
-1. скопировать репоpиторий и загрузить submodules;
+1. скопировать репоpиторий
   ```
   git clone git@github.com:intKuka/EventApi.git
   ```
