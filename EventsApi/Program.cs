@@ -33,11 +33,11 @@ builder.Services.AddHttpClient(Global.EventClient).AddPolicyHandler(HttpClientPo
 builder.Services.AddHostedService<RmqDeletionListener>();
 builder.Services.AddTransient(typeof(EventDeletionSender));
 
-var v = builder.Configuration.GetSection(nameof(ServicesUris));
-var b = v.Value;
+
 builder.Services.Configure<ServicesUris>(builder.Configuration
     .GetSection(nameof(ServicesUris)));
-builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection(nameof(RabbitMqSettings)));
+builder.Services.Configure<RabbitMqSettings>(builder.Configuration
+    .GetSection(nameof(RabbitMqSettings)));
 
 builder.Services.AddCors(p => p.AddPolicy("corsPolicy", build 
     => build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));

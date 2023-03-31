@@ -10,6 +10,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SC.Internship.Common", "SC.Internship.Common\SC.Internship.Common\SC.Internship.Common.csproj", "{5054F3D2-78B5-4968-9271-00AAB1DCFDCB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{60DE93C1-5A10-4457-8062-F259BB425A66}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2348384A-04D1-43DF-AFD1-BCE557361FEF} = {2348384A-04D1-43DF-AFD1-BCE557361FEF}
+		{7189C6D7-9BB0-462C-8111-EEE675CA3ADD} = {7189C6D7-9BB0-462C-8111-EEE675CA3ADD}
+		{B57F1565-E258-4547-A3B7-6D797243882A} = {B57F1565-E258-4547-A3B7-6D797243882A}
+		{E341C16C-3026-4257-9942-465CE9AF8212} = {E341C16C-3026-4257-9942-465CE9AF8212}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImagesService", "ImagesService\ImagesService.csproj", "{2348384A-04D1-43DF-AFD1-BCE557361FEF}"
 EndProject
@@ -17,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacesService", "SpacesServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsersService", "UsersService\UsersService.csproj", "{E341C16C-3026-4257-9942-465CE9AF8212}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentService", "PaymentService\PaymentService.csproj", "{B57F1565-E258-4547-A3B7-6D797243882A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentService", "PaymentService\PaymentService.csproj", "{B57F1565-E258-4547-A3B7-6D797243882A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

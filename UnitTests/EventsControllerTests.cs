@@ -1,7 +1,6 @@
 using EventsApi.Features.Events;
 using EventsApi.Features.Events.CreateEvent;
 using EventsApi.Features.Events.GetEventById;
-using FluentValidation;
 using MediatR;
 using Moq;
 using SC.Internship.Common.Exceptions;
@@ -13,12 +12,11 @@ namespace UnitTests
     {
         private EventsController _eventsController = null!;
         private readonly Mock<IMediator> _mediator = new();
-        private readonly Mock<IValidator<Event>> _validator = new();
 
         [SetUp]
         public void Setup()
         {
-            _eventsController = new EventsController(_mediator.Object, _validator.Object);
+            _eventsController = new EventsController(_mediator.Object);
         }
 
         [Test]
@@ -44,10 +42,11 @@ namespace UnitTests
                 Starts = new DateTime(2023, 03, 05, 14, 30, 0),
                 Ends = new DateTime(2023, 03, 05, 17, 0, 0),
                 Name = "Event",
-                ImageId = new Guid("4c8ebbeb-ffba-4851-8300-ffd192e99372"),
+                ImageId = new Guid("e9b53393-0d73-4dda-8f18-4a23afbf9d05"),
                 SpaceId = new Guid("169a4f10-0914-4d8d-b922-3958621a72a5"),
                 TicketsQuantity = 2,
-                HasNumeration = true
+                HasNumeration = true,
+                Price = 30
             };
             var expected = new ScResult<Event>(eEvent);
 
@@ -70,12 +69,13 @@ namespace UnitTests
                 Starts = new DateTime(2023, 03, 05, 14, 30, 0),
                 Ends = new DateTime(2023, 03, 05, 17, 0, 0),
                 Name = "Event",
-                ImageId = new Guid("4c8ebbeb-ffba-4851-8300-ffd192e99373"),
+                ImageId = new Guid("e9b53393-0d73-4dda-8f18-4a23afbf9d06"),
                 SpaceId = new Guid("169a4f10-0914-4d8d-b922-3958621a72a5"),
                 TicketsQuantity = 2,
-                HasNumeration = true
+                HasNumeration = true,
+                Price = 30
             };
-            var expected = new ScException("Изображение не найдено");
+            var expected = new ScException("Изображение e9b53393-0d73-4dda-8f18-4a23afbf9d06 не найдено");
 
             _mediator.Setup(x => x.Send(new CreateEventCommand(eEvent), default));
 
@@ -89,6 +89,7 @@ namespace UnitTests
             {
                 actual = e;
             }
+
 
             // Assert
             Assert.That(actual.Message, Is.EqualTo(expected.Message)) ;

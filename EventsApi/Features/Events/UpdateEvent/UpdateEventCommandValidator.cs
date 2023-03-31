@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
+using JetBrains.Annotations;
 
 namespace EventsApi.Features.Events.UpdateEvent
 {
+    [UsedImplicitly]
     public class UpdateEventCommandValidator : AbstractValidator<UpdateEventCommand>
     {
         public UpdateEventCommandValidator()

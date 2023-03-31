@@ -3,7 +3,6 @@ using EventsApi.Features.Events.DeleteEvent;
 using EventsApi.Features.Events.GetEventById;
 using EventsApi.Features.Events.GetEvents;
 using EventsApi.Features.Events.UpdateEvent;
-using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SC.Internship.Common.ScResult;
