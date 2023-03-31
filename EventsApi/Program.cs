@@ -1,6 +1,7 @@
 using EventsApi.Features.Events;
 using EventsApi.Middleware;
 using EventsApi.MongoDb;
+using EventsApi.Policies;
 using EventsApi.RabbitMq;
 using FluentValidation;
 using MongoDB.Bson;
@@ -24,7 +25,7 @@ builder.Services.AddSingleton<IMongoClient>(_ =>
 builder.Services.AddScoped<IValidator<Event>, EventValidator>();
 builder.Services.AddSingleton<IEventRepo, MongoDbRepo>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient(Global.EventClient).AddPolicyHandler(HttpClientPolicy.GetExponentialRetryPolicy());
 builder.Services.AddHostedService<RmqDeletionListener>();
 builder.Services.AddSingleton(typeof(EventDeletionSender));
 

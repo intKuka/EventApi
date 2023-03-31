@@ -14,7 +14,10 @@
 
 3. загрузить submoudules
   ```
-  git submodule init
+  git submodule init  
+  ```
+
+  ```
   git submodule update
   ```
 
