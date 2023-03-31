@@ -9,17 +9,18 @@ namespace EventsApi.Features.Tickets.IssueTicket
     public class IssueTicketHandler : IRequestHandler<IssueTicketCommand, ScResult<Ticket>>
     {
         private readonly IEventRepo _eventData;
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _factory;
 
-        public IssueTicketHandler(IEventRepo eventData)
+        public IssueTicketHandler(IEventRepo eventData, IHttpClientFactory factory)
         {
             _eventData = eventData;
-            _httpClient = new HttpClient();
+            _factory = factory;;
         }
 
         public async Task<ScResult<Ticket>> Handle(IssueTicketCommand request, CancellationToken cancellationToken)
         {
-            using var response = await _httpClient.GetAsync($"http://localhost:5018/users/{request.UserGuid}", cancellationToken);
+            var client = _factory.CreateClient(Global.EventClient);
+            using var response = await client.GetAsync($"http://localhost:5018/users/{request.UserGuid}", cancellationToken);
             if (response.Content.ReadAsStringAsync(cancellationToken).Result == "false")
                 return new ScResult<Ticket>(new ScError() { Message = $"Пользователь {request.UserGuid} не найден" });
             var freeTicket = TicketsData.IssueFreeTicket(request.Event, request.UserGuid);

@@ -11,12 +11,12 @@ namespace EventsApi.Features.Events.UpdateEvent
     public class UpdateEventHandler : IRequestHandler<UpdateEventCommand, ScResult<Event>>
     {
         private readonly IEventRepo _eventData;
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _factory;
 
-        public UpdateEventHandler(IEventRepo eventData)
+        public UpdateEventHandler(IEventRepo eventData, IHttpClientFactory factory)
         {
             _eventData = eventData;
-            _httpClient = new HttpClient();
+            _factory = factory;
         }
 
         public async Task<ScResult<Event>> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
@@ -28,14 +28,15 @@ namespace EventsApi.Features.Events.UpdateEvent
         }
         private async Task IsValidImageAndSpace(Guid? imageGuid, Guid spaceGuid)
         {
+            var client = _factory.CreateClient(Global.EventClient);
             if (imageGuid != null)
             {
-                using var response = await _httpClient.GetAsync($"http://localhost:5051/images/{imageGuid}");
+                using var response = await client.GetAsync($"http://localhost:5051/images/{imageGuid}");
                 if (response.Content.ReadAsStringAsync().Result == "false")
                     throw new ScException($"Изображение {imageGuid} не найдено");
             }
 
-            using var response1 = await _httpClient.GetAsync($"http://localhost:5093/spaces/{spaceGuid}");
+            using var response1 = await client.GetAsync($"http://localhost:5093/spaces/{spaceGuid}");
             if (response1.Content.ReadAsStringAsync().Result == "false")
                 throw new ScException($"Пространство {spaceGuid} не найдено");
         }
