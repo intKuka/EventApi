@@ -138,6 +138,8 @@ docker-compose up --build
 
 **description** -- пустая строка
 
+**imageId** -- null
+
 **ticketsQuantity** -- значение 0
 
 **hasNumeration** -- значение false
